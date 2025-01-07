@@ -4,27 +4,38 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public Quaternion q;
-    public bool manual;
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void setPosition(Vector3 pos)
+    // Setter for position
+    public void SetPosition(Vector3 pos)
     {
         transform.position = pos;
     }
 
-    public void setRotation(Quaternion quat)
+    // Getter for position
+    public Vector3 GetPosition()
     {
-        transform.localRotation = quat;
+        return transform.position;
+    }
+
+    // Setter for rotation
+    public void SetRotation(Quaternion rot)
+    {
+        transform.rotation = rot;
+    }
+
+    // Getter for rotation
+    public Quaternion GetRotation()
+    {
+        return transform.rotation;
     }
 }

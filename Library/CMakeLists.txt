@@ -3,25 +3,25 @@ project(tracking)
 
 set(CMAKE_CXX_STANDARD 20)
 
-#include directory for openvr
+# Include directory for openvr and local includes
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/openvr/include")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/includes")  # Include local headers
 
-#link directory for openvr
+# Link directory for openvr
 link_directories("${CMAKE_CURRENT_SOURCE_DIR}/openvr/lib")
 
-#add src files to build
+# Add src files to build
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
-#add library target and add files from src
-add_library(tracking SHARED  ${SOURCES})
+# Add library target and add files from src
+add_library(tracking SHARED ${SOURCES})
 
 set(CMAKE_SHARED_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 
-#links openvr
+# Links openvr
 target_link_libraries(tracking openvr_api)
 
-
-#copies openvr_api.dll to the binary folder
+# Copies openvr_api.dll to the binary folder
 add_custom_command(
         TARGET tracking PRE_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
