@@ -56,8 +56,8 @@ public class doublescreenCameramanager : MonoBehaviour
     {
 
         // Set the cameras at quarter-width distances along the x-axis.
-        Vector3 camera1Position = new Vector3(sizeOfTheMap.x / 4, 0f, 0f); // Camera for the right side
-        Vector3 camera2Position = new Vector3(-sizeOfTheMap.x / 4, 0f, 0f); // Camera for the left side
+        Vector3 camera1Position = new Vector3(sizeOfTheMap.x / 4, height, 0f); // Camera for the right side
+        Vector3 camera2Position = new Vector3(-sizeOfTheMap.x / 4, height, 0f); // Camera for the left side
 
         // Cameras look perpendicular to the plane
         Vector3 camera1LookAt = new Vector3(sizeOfTheMap.x / 4, 0f, 0f);
