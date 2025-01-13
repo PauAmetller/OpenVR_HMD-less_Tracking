@@ -61,7 +61,7 @@ public class doublescreenCameramanager : MonoBehaviour
 
         // Cameras look perpendicular to the plane
         Vector3 camera1LookAt = new Vector3(sizeOfTheMap.x / 4, 0f, 0f);
-        Vector3 camera2LookAt = new Vector3(-sizeOfTheMap.x / 4, 0f, 0f);
+        //Vector3 camera2LookAt = new Vector3(-sizeOfTheMap.x / 4, 0f, 0f);
 
         // Configure the first camera (right side)
         camera1.aspect = sizeOfTheMap.x / (sizeOfTheMap.y / 2f);  // Aspect ratio based on the plane's size
@@ -76,7 +76,7 @@ public class doublescreenCameramanager : MonoBehaviour
         camera2.orthographic = true;
         camera2.orthographicSize = sizeOfTheMap.y / 4f; 
         camera2.transform.localPosition = camera2Position;
-        camera2.transform.LookAt(camera2LookAt);  // Look at the center (0, 0, 0)
+        camera2.transform.rotation = camera1.transform.rotation * Quaternion.Euler(180f, 180f, 0f); //I can't understand why the 180 rotation at x axis (Review)
         camera2.backgroundColor = backgroundColor;
 
         // Display for each camera
@@ -124,17 +124,20 @@ public class doublescreenCameramanager : MonoBehaviour
                 }
             }
 
-            // Move and scale child objects of duplicated canvas
+            // Move, scale, and rotate child objects of duplicated canvas
             foreach (Transform child in duplicatedCanvas.transform)
             {
                 RectTransform childRect = child.GetComponent<RectTransform>();
                 if (childRect != null)
                 {
                     childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                          childRect.anchoredPosition.y - halfCanvasHeight);
+                                                             childRect.anchoredPosition.y + halfCanvasHeight);
                     childRect.localScale = new Vector3(childRect.localScale.x,
-                                                     childRect.localScale.y * scaleFactor,
-                                                     childRect.localScale.z);
+                                                       childRect.localScale.y * scaleFactor,
+                                                       childRect.localScale.z);
+
+                    // Apply 180 degrees rotation around the X-axis
+                    childRect.localRotation = Quaternion.Euler(0f, 0f, 180f);
                 }
             }
 

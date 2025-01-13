@@ -1045,7 +1045,7 @@ GameObject:
   - component: {fileID: 328687652}
   - component: {fileID: 328687651}
   m_Layer: 5
-  m_Name: Scale Value
+  m_Name: RealWorldSize Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1983,7 +1983,7 @@ MonoBehaviour:
   - {fileID: 2032303767}
   - {fileID: 1142972673}
   - {fileID: 2017116251}
-  calibrationSaveFilePath: 
+  calibrationSaveFilePath: NewFolder_CompletePath
   playerSelected: 1
   trackingDisabledPlayerSpeed: 5
 --- !u!1 &755713255
@@ -5181,7 +5181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlePositionManager: {fileID: 1661620804}
-  canvasGroupManager: {fileID: 0}
+  canvasGroupManager: {fileID: 234860585}
   pointsVisuals: []
 --- !u!1 &1358091799
 GameObject:
@@ -6985,7 +6985,7 @@ GameObject:
   - component: {fileID: 1658011368}
   - component: {fileID: 1658011370}
   m_Layer: 5
-  m_Name: Scale Header
+  m_Name: RealWorldSize Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7031,7 +7031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Scale: '
+  m_text: 'Physical World Size: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7120,9 +7120,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Scale:'
-  spanish: 'Escala:'
-  catalan: 'Escala:'
+  english: 'Physical World Size: '
+  spanish: "Tama\xF1o del Entorno:"
+  catalan: 'Tamany de l''Entorn:'
 --- !u!1 &1661620802
 GameObject:
   m_ObjectHideFlags: 0

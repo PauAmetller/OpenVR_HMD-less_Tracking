@@ -44,6 +44,10 @@ public class CalibrationManager : MonoBehaviour
         }
         else if (step == 4)
         {
+            canvasGroupManager.SwitchCanvas("Tracking Step 5");
+        }
+        else if (step == 5)
+        {
             canvasGroupManager.SwitchCanvas("Tracking Menú");
         }
 

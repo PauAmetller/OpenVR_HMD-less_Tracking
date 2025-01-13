@@ -16,13 +16,13 @@ public static class CalibrationUtils
     /// Calculates the calibrated position
     /// </summary>
     //Return the given raw position as a calibrated position
-    public static Vector3 CalibrateRawPos(Vector3 rawPos, bool enableYAxis, Calibration calibration)
+    public static Vector3 CalibrateRawPos(Vector3 rawPos, bool enableYAxis, Calibration calibration, Vector3 virtualWorldSpace)
     {
         //Apply the calibration transform (rotation)
         Vector3 calibratedPos = ApplyCalibrationTransform(rawPos, calibration);
 
         // Apply scaling to the position
-        calibratedPos = ApplyScale(calibratedPos, calibration.GetCalibrationScale());
+        calibratedPos = ApplyScale(calibratedPos, calibration.GetCalibrationRealWorldSize(), virtualWorldSpace);
 
         // Apply the Y offset and decide if Y should be enabled or set to zero
         calibratedPos.y = enableYAxis ? (rawPos.y - calibration.GetCalibrationCenter().y) : 0;
@@ -35,8 +35,14 @@ public static class CalibrationUtils
         return calibration.GetCalibrationRotation() * (rawPos - calibration.GetCalibrationCenter());
     }
 
-    private static Vector3 ApplyScale(Vector3 calibratedPos, Vector3 calibrationScale)
+    private static Vector3 ApplyScale(Vector3 calibratedPos, Vector3 realWorldScale, Vector3 virtualWorldSpace)
     {
+        Vector3 calibrationScale = new Vector3(
+            virtualWorldSpace.x / realWorldScale.x,
+            virtualWorldSpace.y / realWorldScale.y,
+            virtualWorldSpace.z / realWorldScale.z
+        );
+
         return new Vector3(
             calibratedPos.x * calibrationScale.x,
             calibratedPos.y * calibrationScale.y,
@@ -45,6 +51,15 @@ public static class CalibrationUtils
     }
 
     // ==== Ends: Update Positions Block ====
+
+    // ==== Start: Update Rotation Block ====
+
+    public static Quaternion CalibratedRawRot(Quaternion playerRotation, Calibration calibration)
+    {
+        return playerRotation * calibration.GetCalibrationRotation();
+    }
+
+    // ==== Ends: Update Rotation Block ====
 
     // ==== Starts: Fill Calibration Data ====
 
@@ -59,7 +74,7 @@ public static class CalibrationUtils
         calibrationData.SetCalibrationCenter(CalculateCalibrationCenter(calibrationPoints));
 
         //Calculate the Scale of the calibrated world
-        calibrationData.SetCalibrationScale(CalculateScale(calibrationPoints, virtualWorldSpace));
+        calibrationData.SetCalibrationRealWorldSize(CalculateRealWorldSize(calibrationPoints, virtualWorldSpace));
 
         //Calculate the CalibrationTransform
         calibrationData.SetCalibrationRotation(CalculateRotationMatrix(calibrationPoints));
@@ -74,7 +89,7 @@ public static class CalibrationUtils
         return CalibrationPointsUtils.ComputeCentroid(points);
     }
 
-    private static Vector3 CalculateScale(Vector3[] points, Vector3 virtualWorldSpace)
+    private static Vector3 CalculateRealWorldSize(Vector3[] points, Vector3 virtualWorldSpace)
     {
         // Calculate lengths of opposing sides
         float vertical1 = (points[0] - points[1]).magnitude;
@@ -96,13 +111,8 @@ public static class CalibrationUtils
 
         // Calculate average scale
         Vector3 realWorldScale = new Vector3(horizontal, up, vertical) ;
-        Vector3 scale = new Vector3(
-            virtualWorldSpace.x / realWorldScale.x,
-            virtualWorldSpace.y / realWorldScale.y,
-            virtualWorldSpace.z / realWorldScale.z
-        );
 
-        return scale * (10f/9f); //Rebuild scale from 90% to 100% of the screen size
+        return realWorldScale * (10f/9f); //Rebuild scale from 90% to 100% of the screen size
     }
 
     private static Quaternion CalculateRotationMatrix(Vector3[] points)

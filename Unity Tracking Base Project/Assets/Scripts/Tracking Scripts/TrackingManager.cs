@@ -101,6 +101,8 @@ public class TrackingManager : MonoBehaviour
                     //calibrationUI.playersPositionsText[i].text = Utils.Vector3ToString(new Vector3(0, 0, 0));
                 }
             }
+
+            calibration.Initialize();
         }
     }
 
@@ -175,14 +177,15 @@ public class TrackingManager : MonoBehaviour
                 if (calibrated)
                 {
                     //Calculates the calibrated position using the Calibration data
-                    Vector3 calibratedPos = CalibrationUtils.CalibrateRawPos(playersRawPosition, enableYAxis, calibration);
+                    Vector3 calibratedPos = CalibrationUtils.CalibrateRawPos(playersRawPosition, enableYAxis, calibration, virtualWorldSpace);
     
                     players[i].GetComponent<PlayerMovement>().SetPosition(calibratedPos);
 
                     if (enableRotation)
                     {
                         Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], -openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
-                        players[i].GetComponent<PlayerMovement>().SetRotation(playerRotation);
+                        Quaternion calibratedPlayerRotation = CalibrationUtils.CalibratedRawRot(playerRotation, calibration);
+                        players[i].GetComponent<PlayerMovement>().SetRotation(calibratedPlayerRotation);
                     }
                 }
                 else
@@ -271,6 +274,7 @@ public class TrackingManager : MonoBehaviour
     {
         calibrationManager.SaveCalibrationPoints(players[0].GetComponent<PlayerMovement>().GetPosition());
         calibrationManager.HideCalibrateElements();
+        calibrationManager.ShowInstructions(5);
 
         if (calibrationManager.CheckConsistenceOfCalibrationPoints())
         {

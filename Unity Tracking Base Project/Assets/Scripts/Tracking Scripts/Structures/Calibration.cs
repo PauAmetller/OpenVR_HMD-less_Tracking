@@ -11,20 +11,27 @@ using Newtonsoft.Json;
 public struct Calibration
 {
     public Vector3 CalibrationCenter { get; private set; }  //Center of the scene
-    public Vector3 CalibrationScale { get; private set; }  //Scale comparing real world and 1, so final scale will be application size / scale
+    public Vector3 CalibrationRealWorldSize { get; private set; }  //Scale comparing real world and 1, so final scale will be application size / scale
     public Quaternion CalibrationRotation { get; private set; } // Rotation diference in a quaternion
 
-    public Calibration(Vector3 center, Vector3 scale, Quaternion matTransform)
+    public Calibration(Vector3 center, Vector3 realWorldSize, Quaternion matTransform)
     {
         CalibrationCenter = center;
-        CalibrationScale = scale;
+        CalibrationRealWorldSize = realWorldSize;
         CalibrationRotation = matTransform;
+    }
+
+    public void Initialize()
+    {
+        CalibrationCenter = Vector3.zero;
+        CalibrationRealWorldSize = Vector3.zero;
+        CalibrationRotation = Quaternion.identity;
     }
 
     public void Clear()
     {
         CalibrationCenter = Vector3.zero;
-        CalibrationScale = Vector3.zero;
+        CalibrationRealWorldSize = Vector3.zero;
         CalibrationRotation = Quaternion.identity;
     }
 
@@ -38,9 +45,9 @@ public struct Calibration
         CalibrationCenter = new Vector3(vec.x, vec.y + yOffset, vec.z);
     }
 
-    public void SetCalibrationScale(Vector3 scale)
+    public void SetCalibrationRealWorldSize(Vector3 realWorldSize)
     {
-        CalibrationScale = scale;
+        CalibrationRealWorldSize = realWorldSize;
     }
 
     public void SetCalibrationRotation(Quaternion mat)
@@ -53,9 +60,9 @@ public struct Calibration
         return CalibrationCenter;
     }
 
-    public Vector3 GetCalibrationScale()
+    public Vector3 GetCalibrationRealWorldSize()
     {
-        return CalibrationScale;
+        return CalibrationRealWorldSize;
     }
 
     public Quaternion GetCalibrationRotation()
