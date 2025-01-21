@@ -166,8 +166,16 @@ public static class CalibrationUtils
 
     // ==== Ends: Load File Block ====
 
+    // ==== Starts: Save File Block ====
+
+    /// <summary>
+    /// Saves the calibration data into a json file.
+    /// </summary>
     public static void SaveCalibrationJson(Calibration calibrationData, string fullCalibrationSaveFilePath)
     {
-
+        string jsonString = JsonConvert.SerializeObject(calibrationData, Formatting.Indented); 
+        File.WriteAllText(fullCalibrationSaveFilePath, jsonString);
     }
+
+    // ==== Ends: Save File Block ====
 }

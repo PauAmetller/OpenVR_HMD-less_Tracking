@@ -9,7 +9,7 @@ public class TrackingManager : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] private CalibrationManager calibrationManager;              // Handles calibration process
-    //[SerializeField] private CalibrationUI calibrationUI;     // Handles UI interactions
+    [SerializeField] private CalibrationUI calibrationUI;     // Handles UI interactions
 
     // Enable or disable tracking plugin.
     [Header("On / Off")]
@@ -77,11 +77,11 @@ public class TrackingManager : MonoBehaviour
             int detectedBaseStations = PluginConnector.GetNumberOfBaseStations();
             if (detectedBaseStations == numberOfBaseStations)
             {
-                //calibrationUI.baseStationNumberText.text = detectedBaseStations.ToString();
+                calibrationUI.SetNumberOfBaseStations(detectedBaseStations);
             }
             else
             {
-                //calibrationUI.baseStationNumberText.text = "Discrepancy";
+                calibrationUI.SetNumberOfBaseStations("Discrepancy");
             }
             // Set interface text for player number and checks consistency
             int detectedPlayers = PluginConnector.GetNumberOfTrackers();
@@ -92,13 +92,14 @@ public class TrackingManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("No tracker detcted");
                 //calibrationUI.playersNumberText.text = "Discrepancy";
             }
             for (int i = 0; i < numberOfPlayers; i++)
             {
                 if (i < numberOfPlayers)
                 {
-                    //calibrationUI.playersPositionsText[i].text = Utils.Vector3ToString(new Vector3(0, 0, 0));
+                    calibrationUI.SetPlayerXPos(i, new Vector3(0, 0, 0));
                 }
             }
 
@@ -146,14 +147,17 @@ public class TrackingManager : MonoBehaviour
 
         try
         {
-            CalibrationUtils.LoadCalibrationJson(fullCalibrationSaveFilePath);
+            calibration = CalibrationUtils.LoadCalibrationJson(fullCalibrationSaveFilePath);
+
+            UpdateCalibrationUICalibrationData();
+
             calibrated = true;
-            //calibrationUI.calibrationFileText.text = "Loaded Calibration!";
+            calibrationUI.SetCalibrationFileStatus("Loaded Calibration!");
         }
         catch (Exception)
         {
             Debug.Log("Calibration not found. If you want to Start with a preloaded calibration, please generate a file with 'Save Current Calibration' button");
-            //calibrationUI.calibrationFileText.text = "Calibration Failed!";
+            calibrationUI.SetCalibrationFileStatus("Calibration Failed!");
         }
     }
 
@@ -174,24 +178,31 @@ public class TrackingManager : MonoBehaviour
                 // Get position from openvr array
                 Vector3 playersRawPosition = new Vector3(openVrOutputArr[0 + playerIndex], openVrOutputArr[1 + playerIndex], openVrOutputArr[2 + playerIndex]);
 
+                Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], -openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
+
                 if (calibrated)
                 {
                     //Calculates the calibrated position using the Calibration data
                     Vector3 calibratedPos = CalibrationUtils.CalibrateRawPos(playersRawPosition, enableYAxis, calibration, virtualWorldSpace);
-    
                     players[i].GetComponent<PlayerMovement>().SetPosition(calibratedPos);
+                    calibrationUI.SetPlayerXPos(i, calibratedPos);
 
-                    if (enableRotation)
-                    {
-                        Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], -openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
-                        Quaternion calibratedPlayerRotation = CalibrationUtils.CalibratedRawRot(playerRotation, calibration);
-                        players[i].GetComponent<PlayerMovement>().SetRotation(calibratedPlayerRotation);
-                    }
+                    //Calculates the calibrated rotation using the Calibration data
+                    Quaternion calibratedPlayerRotation = CalibrationUtils.CalibratedRawRot(playerRotation, calibration);
+                    players[i].GetComponent<PlayerMovement>().SetRotation(calibratedPlayerRotation);
+                    calibrationUI.SetPlayerXRot(i, calibratedPlayerRotation);
                 }
                 else
                 {
                     players[i].GetComponent<PlayerMovement>().SetPosition(playersRawPosition);
+                    calibrationUI.SetPlayerXPos(i, playersRawPosition);
+                    if (enableRotation)
+                    {
+                        players[i].GetComponent<PlayerMovement>().SetRotation(playerRotation);
+                        calibrationUI.SetPlayerXRot(i, playerRotation);
+                    }
                 }
+
             }
 
             yield return new WaitForSeconds(positionUpdateInterval);
@@ -273,13 +284,15 @@ public class TrackingManager : MonoBehaviour
     public void EndCalibration()
     {
         calibrationManager.SaveCalibrationPoints(players[0].GetComponent<PlayerMovement>().GetPosition());
-        calibrationManager.HideCalibrateElements();
+        //calibrationManager.HideCalibrateElements();
         calibrationManager.ShowInstructions(5);
 
         if (calibrationManager.CheckConsistenceOfCalibrationPoints())
         {
 
-            Calibration calibrationData = calibrationManager.CalculateCalibrationData(virtualWorldSpace);
+            calibration = calibrationManager.CalculateCalibrationData(virtualWorldSpace);
+
+            UpdateCalibrationUICalibrationData();
 
             calibrated = true;
             Debug.Log("Calibration completed.");
@@ -359,12 +372,12 @@ public class TrackingManager : MonoBehaviour
         if (calibrated)
         {
             CalibrationUtils.SaveCalibrationJson(calibration, calibrationSaveFilePath);
-            //calibrationUI.ShowCalibrationSavedMessage();
+            calibrationUI.SetCalibrationFileStatus("Calibration Saved");
         }
         else
         {
             Debug.Log("Calibration not completed. Please calibrate first.");
-            //calibrationUI.ShowCalibrationFailedMessage();
+            calibrationUI.SetCalibrationFileStatus("Calibration not completed");
         }
     }
 
@@ -391,5 +404,16 @@ public class TrackingManager : MonoBehaviour
             if (isTrackingInitialized)
                 PluginConnector.StopTracking();
         }
+    }
+
+    /// <summary>
+    /// Update the calibration center, physicalWorldSize and rotation offset showed in the UI with the calibration values.
+    /// </summary>
+    private void UpdateCalibrationUICalibrationData()
+    {
+
+        calibrationUI.SetCenter(calibration.GetCalibrationCenter());
+        calibrationUI.SetPhysicalWorldSize(calibration.GetCalibrationRealWorldSize());
+        calibrationUI.SetRotationOffset(calibration.GetCalibrationRotation());
     }
 }

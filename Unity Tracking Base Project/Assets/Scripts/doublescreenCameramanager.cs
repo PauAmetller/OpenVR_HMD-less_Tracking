@@ -18,6 +18,10 @@ public class doublescreenCameramanager : MonoBehaviour
     [Tooltip("This canvas will be split and rendered accross the two cameras")]
     [SerializeField] private Canvas originalCanvas;
 
+    [SerializeField] private float projectedHeight;
+    [SerializeField] private float desiredHeight;
+    private float visibleHeightPercentatge;
+
     /// <summary>
     /// This script just open the two screens on the same allication
     /// </summary>
@@ -35,6 +39,8 @@ public class doublescreenCameramanager : MonoBehaviour
         //Multiply by 10 since the default size of a plane is 10x10
         sizeOfTheMap = new Vector2(plane.transform.localScale.x * 10f, plane.transform.localScale.z * 10f);
 
+        visibleHeightPercentatge = desiredHeight / projectedHeight;
+
         // Get cameras
         Camera camera1 = transform.GetChild(0).GetComponent<Camera>();
         Camera camera2 = transform.GetChild(1).GetComponent<Camera>();
@@ -50,6 +56,9 @@ public class doublescreenCameramanager : MonoBehaviour
 
         // Configure the canvas display between the cameras
         ConfigureSplitCanvas();
+
+        // Configure the display dimensions
+        ConfigureDisplay(camera1, camera2);
     }
 
     private void ConfigureCameras(Camera camera1, Camera camera2)
@@ -106,9 +115,12 @@ public class doublescreenCameramanager : MonoBehaviour
 
             // Calculate half canvas height
             float halfCanvasHeight = originalRect.sizeDelta.y * 0.5f;
+            float extraCanvasHeightOffset = originalRect.sizeDelta.y * (1.0f - visibleHeightPercentatge) ;
             float halfCanvasWidth = originalRect.sizeDelta.x * 0.5f;
 
-            float scaleFactor = (halfCanvasHeight / halfCanvasWidth) * 2;
+            float scaleFactor = ((halfCanvasHeight * visibleHeightPercentatge) / halfCanvasWidth) * 2;
+
+            float canvasHeightOffset = halfCanvasHeight - extraCanvasHeightOffset;
 
             // Move and scale child objects of original canvas
             foreach (Transform child in originalCanvas.transform)
@@ -117,7 +129,7 @@ public class doublescreenCameramanager : MonoBehaviour
                 if (childRect != null)
                 {
                     childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                          childRect.anchoredPosition.y + halfCanvasHeight);
+                                                          childRect.anchoredPosition.y + canvasHeightOffset);
                     childRect.localScale = new Vector3(childRect.localScale.x,
                                                      childRect.localScale.y * scaleFactor,
                                                      childRect.localScale.z);
@@ -131,7 +143,7 @@ public class doublescreenCameramanager : MonoBehaviour
                 if (childRect != null)
                 {
                     childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                             childRect.anchoredPosition.y + halfCanvasHeight);
+                                                             childRect.anchoredPosition.y + canvasHeightOffset);
                     childRect.localScale = new Vector3(childRect.localScale.x,
                                                        childRect.localScale.y * scaleFactor,
                                                        childRect.localScale.z);
@@ -141,8 +153,38 @@ public class doublescreenCameramanager : MonoBehaviour
                 }
             }
 
+            ConfigureMask(originalCanvas);
+            ConfigureMask(duplicatedCanvas);
+
             // Force UI update
             Canvas.ForceUpdateCanvases();
         }
+    }
+
+    private void ConfigureDisplay(Camera camera1, Camera camera2)
+    {
+        camera1.rect = new Rect(0f, 0f, 1f, visibleHeightPercentatge);
+        camera2.rect = new Rect(0f, 0f, 1f, visibleHeightPercentatge);
+    }
+
+    private void ConfigureMask(Canvas canvas)
+    {
+        // Create Masking Object
+        GameObject maskGO = new GameObject("CanvasMask");
+        maskGO.transform.SetParent(canvas.transform);
+
+        // Add RectMask2D component
+        RectMask2D rectMask = maskGO.AddComponent<RectMask2D>();
+
+        // Adjust RectTransform to mask the top 20% and show the bottom 80%
+        RectTransform maskRect = maskGO.GetComponent<RectTransform>();
+        maskRect.anchorMin = new Vector2(0, visibleHeightPercentatge); 
+        maskRect.anchorMax = new Vector2(1, 1f);
+        maskRect.offsetMin = Vector2.zero;
+        maskRect.offsetMax = Vector2.zero;
+
+        // Add an Image component to visualize the mask area
+        Image maskImage = maskGO.AddComponent<Image>(); 
+        maskImage.color = new Color(0, 0, 0, 1f); // Semi-transparent black for visualization
     }
 }

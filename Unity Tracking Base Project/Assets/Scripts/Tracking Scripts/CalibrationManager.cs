@@ -14,8 +14,8 @@ public class CalibrationManager : MonoBehaviour
     [SerializeField] private CirclePositionManager circlePositionManager;
     [SerializeField] private CanvasGroupManager canvasGroupManager;
 
-    [Header("Calibration Points Visuals")]
-    [SerializeField] private List<GameObject> pointsVisuals;
+    //[Header("Calibration Points Visuals")]
+    //[SerializeField] private List<GameObject> pointsVisuals;
 
     private List<Vector3> calibrationPoints = new List<Vector3>();
 
@@ -54,35 +54,35 @@ public class CalibrationManager : MonoBehaviour
         GiveInstructions(step);
     }
 
-    /// <summary>
-    /// Activates the visual representation of a calibration point.
-    /// </summary>
-    private void ShowPoint(int pointIndex)
-    {
-        if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
-        {
-            pointsVisuals[pointIndex].SetActive(true); // Activate the point's visual
-        }
-        else
-        {
-            Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
-        }
-    }
+    ///// <summary>
+    ///// Activates the visual representation of a calibration point.
+    ///// </summary>
+    //private void ShowPoint(int pointIndex)
+    //{
+    //    if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
+    //    {
+    //        pointsVisuals[pointIndex].SetActive(true); // Activate the point's visual
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
+    //    }
+    //}
 
-    /// <summary>
-    /// Activates the visual representation of a calibration point.
-    /// </summary>
-    private void HidePoint(int pointIndex)
-    {
-        if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
-        {
-            pointsVisuals[pointIndex].SetActive(false); // Activate the point's visual
-        }
-        else
-        {
-            Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
-        }
-    }
+    ///// <summary>
+    ///// Activates the visual representation of a calibration point.
+    ///// </summary>
+    //private void HidePoint(int pointIndex)
+    //{
+    //    if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
+    //    {
+    //        pointsVisuals[pointIndex].SetActive(false); // Activate the point's visual
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
+    //    }
+    //}
 
     /// <summary>
     /// Provides instructions for the current step of calibration.
@@ -96,18 +96,18 @@ public class CalibrationManager : MonoBehaviour
         // audioManager.PlayInstructionClip("track_points");
     }
 
-    /// <summary>
-    /// Hides all visual elements used for the calibration process.
-    /// </summary>
-    public void HideCalibrateElements()
-    {
-        for (int pointIndex = 0; pointIndex < pointsVisuals.Count; pointIndex++)
-        {
-            HidePoint(pointIndex);
-        }
+    ///// <summary>
+    ///// Hides all visual elements used for the calibration process.
+    ///// </summary>
+    //public void HideCalibrateElements()
+    //{
+    //    for (int pointIndex = 0; pointIndex < pointsVisuals.Count; pointIndex++)
+    //    {
+    //        HidePoint(pointIndex);
+    //    }
 
-        //Hide any other member that there could be
-    }
+    //    //Hide any other member that there could be
+    //}
 
 
     /// <summary>

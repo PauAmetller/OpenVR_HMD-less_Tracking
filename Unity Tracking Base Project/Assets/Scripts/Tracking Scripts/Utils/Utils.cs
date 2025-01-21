@@ -28,7 +28,7 @@ public static class Utils
         float y = Mathf.Round(q.y * 100f) / 100f;
         float z = Mathf.Round(q.z * 100f) / 100f;
         float w = Mathf.Round(q.w * 100f) / 100f;
-        return $"({x} , {y} , {z}, {w})";
+        return $"({x} , {y} , {z})";//, {w})";
     }
 
     // ==== Ends: To string utilities Block ====
