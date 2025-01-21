@@ -1975,7 +1975,7 @@ MonoBehaviour:
   swapXZ: 0
   invertX: 0
   invertZ: 0
-  virtualWorldSpace: {x: 0, y: 0, z: 0}
+  virtualWorldSpace: {x: 50, y: 1, z: 50}
   players:
   - {fileID: 1773101373}
   - {fileID: 382220678}
