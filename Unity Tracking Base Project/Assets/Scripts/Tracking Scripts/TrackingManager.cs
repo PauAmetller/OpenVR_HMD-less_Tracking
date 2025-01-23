@@ -272,6 +272,7 @@ public class TrackingManager : MonoBehaviour
     {
 
         calibrationManager.SaveCalibrationPoints(players[0].GetComponent<PlayerMovement>().GetPosition());
+        calibrationUI.SetPointPos(step - 2, players[0].GetComponent<PlayerMovement>().GetPosition());
         calibrationManager.ShowInstructions(step - 1);  //For coherency between the step and the index of it
     }
 
@@ -281,6 +282,7 @@ public class TrackingManager : MonoBehaviour
     public void EndCalibration()
     {
         calibrationManager.SaveCalibrationPoints(players[0].GetComponent<PlayerMovement>().GetPosition());
+        calibrationUI.SetPointPos(4, players[0].GetComponent<PlayerMovement>().GetPosition());
         //calibrationManager.HideCalibrateElements();
         calibrationManager.ShowInstructions(5);
 
