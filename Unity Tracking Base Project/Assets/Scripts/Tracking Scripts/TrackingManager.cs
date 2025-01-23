@@ -77,11 +77,11 @@ public class TrackingManager : MonoBehaviour
             int detectedBaseStations = PluginConnector.GetNumberOfBaseStations();
             if (detectedBaseStations == numberOfBaseStations)
             {
-                calibrationUI.SetNumberOfBaseStations(detectedBaseStations);
+                //calibrationUI.SetNumberOfBaseStations(detectedBaseStations);
             }
             else
             {
-                calibrationUI.SetNumberOfBaseStations("Discrepancy");
+                //calibrationUI.SetNumberOfBaseStations("Discrepancy");
             }
             // Set interface text for player number and checks consistency
             int detectedPlayers = PluginConnector.GetNumberOfTrackers();
