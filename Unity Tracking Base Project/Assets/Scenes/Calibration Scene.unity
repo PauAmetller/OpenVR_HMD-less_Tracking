@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 93540382}
   - component: {fileID: 93540381}
   - component: {fileID: 93540385}
+  - component: {fileID: 93540386}
   m_Layer: 5
   m_Name: Tracking UI
   m_TagString: Untagged
@@ -442,7 +443,7 @@ RectTransform:
   - {fileID: 66734192}
   - {fileID: 20495276}
   - {fileID: 1807807537}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1916289668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -461,6 +462,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb04a4cd7c515547ab8332204415d9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &93540386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93540380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b1adacab2047845bb2edb43573ae90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseStationNumber: {fileID: 161609271}
+  playerPos: {fileID: 1183802096}
+  playerRot: {fileID: 1125036428}
+  calibrationFileStatus: {fileID: 1520303491}
+  center: {fileID: 925104566}
+  physicalWorldSize: {fileID: 328687651}
+  rotationOffset: {fileID: 1259676487}
+  playersPositions: []
+  playersRotations: []
 --- !u!1 &124981877
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,10 +994,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1951936682}
   - {fileID: 28620305}
-  - {fileID: 1306267858}
   - {fileID: 1128713381}
+  - {fileID: 1951936682}
+  - {fileID: 1306267858}
   m_Father: {fileID: 93540384}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1950,7 +1972,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1332263768}
-  - {fileID: 1895631211}
+  - {fileID: 1080665928}
   m_Father: {fileID: 755713256}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &706434632
@@ -1966,7 +1988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   calibrationManager: {fileID: 1332263769}
-  calibrationUI: {fileID: 1895631212}
+  calibrationUI: {fileID: 1080665929}
   enableTracking: 0
   numberOfPlayers: 1
   numberOfBaseStations: 4
@@ -1974,7 +1996,7 @@ MonoBehaviour:
   enableYAxis: 0
   swapXZ: 0
   invertX: 0
-  invertZ: 0
+  invertZ: 1
   virtualWorldSpace: {x: 50, y: 1, z: 50}
   players:
   - {fileID: 1773101373}
@@ -1985,7 +2007,7 @@ MonoBehaviour:
   - {fileID: 2032303767}
   - {fileID: 1142972673}
   - {fileID: 2017116251}
-  calibrationSaveFilePath: NewFolder_CompletePath
+  calibrationSaveFilePath: C:\Users\pauam\Documents\GitHub\TFG\Calibration Json
   playerSelected: 1
   trackingDisabledPlayerSpeed: 5
 --- !u!1 &755713255
@@ -3580,8 +3602,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PluginConnector, Assembly-CSharp
+      - m_Target: {fileID: 706434632}
+        m_TargetAssemblyTypeName: TrackingManager, Assembly-CSharp
         m_MethodName: OnSaveCalibration
         m_Mode: 1
         m_Arguments:
@@ -3630,6 +3652,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024775755}
   m_CullTransparentMesh: 1
+--- !u!1 &1080665927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1080665928}
+  - component: {fileID: 1080665929}
+  m_Layer: 0
+  m_Name: CalibrationUI Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1080665928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080665927}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 706434631}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1080665929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1080665927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cc27c61f14a5b48bab1548699085de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIs: {fileID: 1916289667}
+  calibrationUI_1: {fileID: 0}
+  calibrationUI_2: {fileID: 0}
 --- !u!1 &1125036426
 GameObject:
   m_ObjectHideFlags: 0
@@ -6832,8 +6901,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PluginConnector, Assembly-CSharp
+      - m_Target: {fileID: 706434632}
+        m_TargetAssemblyTypeName: TrackingManager, Assembly-CSharp
         m_MethodName: OnRemoveCalibration
         m_Mode: 1
         m_Arguments:
@@ -8429,59 +8498,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1868634704}
   m_CullTransparentMesh: 1
---- !u!1 &1895631210
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1895631211}
-  - component: {fileID: 1895631212}
-  m_Layer: 0
-  m_Name: Calibration UI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1895631211
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895631210}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.613403, y: 126.81474, z: 216.68564}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 706434631}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1895631212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1895631210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65b1adacab2047845bb2edb43573ae90, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseStationNumber: {fileID: 161609271}
-  playerPos: {fileID: 1183802096}
-  playerRot: {fileID: 1125036428}
-  calibrationFileStatus: {fileID: 1520303491}
-  center: {fileID: 925104566}
-  physicalWorldSize: {fileID: 328687651}
-  rotationOffset: {fileID: 1259676487}
-  playersPositions: []
-  playersRotations: []
 --- !u!1 &1913213862
 GameObject:
   m_ObjectHideFlags: 0
@@ -8634,6 +8650,38 @@ MonoBehaviour:
   english: Start Calibration Proccess
   spanish: "Empezar Proceso de Calibraci\xF3n"
   catalan: "Comen\xE7ar Proces de Calibraci\xF3"
+--- !u!1 &1916289667
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1916289668}
+  m_Layer: 0
+  m_Name: UI's
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1916289668
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916289667}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 492.24243, y: 171.45952, z: -5.6686487}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 93540384}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1917228411
 GameObject:
   m_ObjectHideFlags: 0
@@ -9692,6 +9740,10 @@ PrefabInstance:
       propertyPath: projectedHeight
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
+      propertyPath: calibrationUIManager
+      value: 
+      objectReference: {fileID: 1080665929}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9703,8 +9755,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 1019360911}
   - {fileID: 5999382101621372701}
-  - {fileID: 93540384}
   - {fileID: 1423390279}
   - {fileID: 1499442828}
   - {fileID: 1500637301}
   - {fileID: 755713256}
+  - {fileID: 1916289668}

@@ -19,7 +19,7 @@ public class CalibrationUI : MonoBehaviour
     [SerializeField] private List<TextMeshProUGUI> playersPositions;
     [SerializeField] private List<TextMeshProUGUI> playersRotations;
 
-    private void start()
+    private void Start()
     {
         center.text = "Uncalibrated";
         physicalWorldSize.text = "Uncalibrated";
@@ -49,7 +49,9 @@ public class CalibrationUI : MonoBehaviour
     }
     public void SetPlayerRot(TextMeshProUGUI text, Quaternion rot) { text.text = Utils.QuaternionToString(rot); }
 
-    public void SetCalibrationFileStatus(string fileStatus) { calibrationFileStatus.text = fileStatus; }
+    public void SetCalibrationFileStatus(string fileStatus) {
+        calibrationFileStatus.text = fileStatus;
+    }
 
     public void SetCenter(Vector3 c) { center.text = Utils.Vector3ToString(c); }
     public void SetPhysicalWorldSize(Vector3 size) { physicalWorldSize.text = Utils.Vector3ToString(size); }

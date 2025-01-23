@@ -22,10 +22,12 @@ public class doublescreenCameramanager : MonoBehaviour
     [SerializeField] private float desiredHeight;
     private float visibleHeightPercentatge;
 
+    [SerializeField] private CalibrationUIManager calibrationUIManager;
+
     /// <summary>
     /// This script just open the two screens on the same allication
     /// </summary>
-    void Awake()
+    private void Awake()
     {
         //NB: screen indexes start from 1
         for (int i = 0; i < GameObject.FindObjectsOfType<Camera>().Length; i++)
@@ -59,6 +61,8 @@ public class doublescreenCameramanager : MonoBehaviour
 
         // Configure the display dimensions
         ConfigureDisplay(camera1, camera2);
+
+        calibrationUIManager.GetUIsReferences();
     }
 
     private void ConfigureCameras(Camera camera1, Camera camera2)

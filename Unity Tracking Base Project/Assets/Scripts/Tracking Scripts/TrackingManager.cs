@@ -9,7 +9,7 @@ public class TrackingManager : MonoBehaviour
 {
     [Header("Dependencies")]
     [SerializeField] private CalibrationManager calibrationManager;              // Handles calibration process
-    [SerializeField] private CalibrationUI calibrationUI;     // Handles UI interactions
+    [SerializeField] private CalibrationUIManager calibrationUI;     // Handles UI interactions
 
     // Enable or disable tracking plugin.
     [Header("On / Off")]
@@ -61,7 +61,7 @@ public class TrackingManager : MonoBehaviour
     {
 
         // Validate dependencies
-        if (calibrationManager == null )//|| calibrationUI == null)
+        if (calibrationManager == null || calibrationUI == null)
         {
             Debug.LogError("Missing one or more dependencies. Assign required scripts in the Inspector.");
             return;
@@ -94,13 +94,6 @@ public class TrackingManager : MonoBehaviour
             {
                 Debug.Log("No tracker detcted");
                 //calibrationUI.playersNumberText.text = "Discrepancy";
-            }
-            for (int i = 0; i < numberOfPlayers; i++)
-            {
-                if (i < numberOfPlayers)
-                {
-                    calibrationUI.SetPlayerXPos(i, new Vector3(0, 0, 0));
-                }
             }
 
             calibration.Initialize();
@@ -137,6 +130,7 @@ public class TrackingManager : MonoBehaviour
             StartCoroutine(GetPositions());
         }
     }
+
 
     /// <summary>
     /// Load the calibration saved in the file and give feedback.
@@ -187,10 +181,13 @@ public class TrackingManager : MonoBehaviour
                     players[i].GetComponent<PlayerMovement>().SetPosition(calibratedPos);
                     calibrationUI.SetPlayerXPos(i, calibratedPos);
 
-                    //Calculates the calibrated rotation using the Calibration data
-                    Quaternion calibratedPlayerRotation = CalibrationUtils.CalibratedRawRot(playerRotation, calibration);
-                    players[i].GetComponent<PlayerMovement>().SetRotation(calibratedPlayerRotation);
-                    calibrationUI.SetPlayerXRot(i, calibratedPlayerRotation);
+                    if (enableRotation)
+                    {
+                        //Calculates the calibrated rotation using the Calibration data
+                        Quaternion calibratedPlayerRotation = CalibrationUtils.CalibratedRawRot(playerRotation, calibration);
+                        players[i].GetComponent<PlayerMovement>().SetRotation(calibratedPlayerRotation);
+                        calibrationUI.SetPlayerXRot(i, calibratedPlayerRotation);
+                    }
                 }
                 else
                 {
