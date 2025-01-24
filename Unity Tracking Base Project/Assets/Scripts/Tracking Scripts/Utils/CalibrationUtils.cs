@@ -118,7 +118,7 @@ public static class CalibrationUtils
     private static Quaternion CalculateRotationMatrix(Vector3[] points)
     {
         // Approximate initial axes
-        Vector3 initialYAxis = CalibrationPointsUtils.GetNormalOfPlaneFormedBySquare(points);
+        Vector3 initialYAxis = CalibrationPointsUtils.GetNormalOfPlaneFormedBySquare(points.Take(4).ToArray());
         Vector3 horizontal1 = points[1] - points[0];
         Vector3 horizontal2 = points[2] - points[3];
         Vector3 initialXAxis = (horizontal1 + horizontal2).normalized;
@@ -146,6 +146,7 @@ public static class CalibrationUtils
         rotationMatrix.SetColumn(0, new Vector4(x.x, x.y, x.z, 0)); // X-axis
         rotationMatrix.SetColumn(1, new Vector4(y.x, y.y, y.z, 0)); // Y-axis
         rotationMatrix.SetColumn(2, new Vector4(z.x, z.y, z.z, 0)); // Z-axis
+        rotationMatrix.SetColumn(3, new Vector4(0, 0, 0, 1)); // Homogeneous coordinate for a 4x4 matrix
 
         return rotationMatrix.rotation;
     }

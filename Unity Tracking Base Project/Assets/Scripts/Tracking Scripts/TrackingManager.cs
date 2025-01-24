@@ -295,13 +295,13 @@ public class TrackingManager : MonoBehaviour
 
             calibrated = true;
             Debug.Log("Calibration completed.");
-        }
+    }
         else
         {
             Debug.Log("Calibration points are not consistent please calibrate again.");
         }
 
-        for (int i = 0; i < 5; i++)
+for (int i = 0; i < 5; i++)
         {
             calibrationUI.SetPointPos(i, new Vector3(0,0,0));
         }

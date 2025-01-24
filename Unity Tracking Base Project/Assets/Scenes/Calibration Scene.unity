@@ -299,9 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Position:'
-  spanish: "Posici\xF3n:"
-  catalan: "Posici\xF3:"
+  english: 'Point 5:'
+  spanish: 'Punto 5:'
+  catalan: 'Punt 5:'
 --- !u!114 &41785269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Point 1:'
+  m_text: 'Point 5:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -540,9 +540,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Position:'
-  spanish: "Posici\xF3n:"
-  catalan: "Posici\xF3:"
+  english: 'Point 1:'
+  spanish: 'Punto 1:'
+  catalan: 'Punt 1:'
 --- !u!114 &79589959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1539,8 +1539,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1639,9 +1639,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Position:'
-  spanish: "Posici\xF3n:"
-  catalan: "Posici\xF3:"
+  english: 'Point 2:'
+  spanish: 'Punto 2:'
+  catalan: 'Punt 2:'
 --- !u!114 &339026047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1662,7 +1662,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Point 1:'
+  m_text: 'Point 2:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2025,9 +2025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Position:'
-  spanish: "Posici\xF3n:"
-  catalan: "Posici\xF3:"
+  english: 'Point 4:'
+  spanish: 'Punto 4:'
+  catalan: 'Punt 4:'
 --- !u!114 &448411757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2048,7 +2048,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Point 1:'
+  m_text: 'Point 4:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3733,8 +3733,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4283,8 +4283,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5170,8 +5170,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5738,8 +5738,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6254,8 +6254,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7700,8 +7700,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -9193,7 +9193,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ccc4717b7dc9740a0a4ada9b9472f953, type: 2}
+  - {fileID: 2100000, guid: 31f09aa0f6b4449eb89e8f5acc7a4a8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9457,8 +9457,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10064,9 +10064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef68b1f079f277438541dc2ec2150c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  english: 'Position:'
-  spanish: "Posici\xF3n:"
-  catalan: "Posici\xF3:"
+  english: 'Point 3:'
+  spanish: 'Punto 3:'
+  catalan: 'Punt 3:'
 --- !u!114 &1902448849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10087,7 +10087,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Point 1:'
+  m_text: 'Point 3:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

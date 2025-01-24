@@ -19,6 +19,7 @@ public static class CalibrationPointsUtils
             throw new ArgumentException("There must be 5 calibration points.");
 
         Vector3[] squarePoints = points.Take(4).ToArray();
+
         // Check the consistency of the rectangular base
         CheckConsistencyOfTheBase(squarePoints);
 
@@ -66,7 +67,7 @@ public static class CalibrationPointsUtils
     public static Vector3 GetNormalOfPlaneFormedBySquare(Vector3[] squarePoints)
     {
         if (squarePoints.Length != 4)
-            throw new ArgumentException("The squarePoints array must contain exactly 4 points.");
+            throw new ArgumentException("The squarePoints array must contain exactly 4 points and it has " + squarePoints.Length + " points.");
 
         // Calculate normals for each triangle
         Vector3[] normals = new Vector3[]

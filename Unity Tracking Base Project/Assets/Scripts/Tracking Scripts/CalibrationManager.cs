@@ -25,7 +25,9 @@ public class CalibrationManager : MonoBehaviour
     /// </summary>
     public void ShowInstructions(int step)
     {
-        circlePositionManager.MoveCircles(step);
+        if(step != 5)
+            circlePositionManager.MoveCircles(step);
+
         if (step == 0)
         {
             canvasGroupManager.SwitchCanvas("Tracking Step 1");
@@ -49,6 +51,7 @@ public class CalibrationManager : MonoBehaviour
         else if (step == 5)
         {
             canvasGroupManager.SwitchCanvas("Tracking Menú");
+            circlePositionManager.DeactivatePulsatingCircle();
         }
 
         GiveInstructions(step);
