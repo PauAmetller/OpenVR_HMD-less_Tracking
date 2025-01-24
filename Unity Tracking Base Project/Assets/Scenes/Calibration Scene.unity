@@ -1118,7 +1118,7 @@ RectTransform:
   m_GameObject: {fileID: 159389468}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 959812720}
@@ -1131,7 +1131,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -155}
-  m_SizeDelta: {x: 500, y: 100}
+  m_SizeDelta: {x: 500, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &159389470
 MonoBehaviour:
@@ -2692,7 +2692,7 @@ MonoBehaviour:
   enableTracking: 0
   numberOfPlayers: 1
   numberOfBaseStations: 4
-  enableRotation: 0
+  enableRotation: 1
   enableYAxis: 0
   swapXZ: 0
   invertX: 0
@@ -11433,7 +11433,7 @@ PrefabInstance:
       objectReference: {fileID: 93540383}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: desiredHeight
-      value: 0.95
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: originalCanvas

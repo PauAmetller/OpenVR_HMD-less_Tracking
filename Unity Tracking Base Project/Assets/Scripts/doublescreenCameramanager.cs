@@ -146,8 +146,11 @@ public class doublescreenCameramanager : MonoBehaviour
                 RectTransform childRect = child.GetComponent<RectTransform>();
                 if (childRect != null)
                 {
+
+                    float Ycorrection = (float)(childRect.anchoredPosition.y * 2.0);
+
                     childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                             childRect.anchoredPosition.y + canvasHeightOffset);
+                                                             childRect.anchoredPosition.y + canvasHeightOffset - Ycorrection);
                     childRect.localScale = new Vector3(childRect.localScale.x,
                                                        childRect.localScale.y * scaleFactor,
                                                        childRect.localScale.z);

@@ -59,8 +59,5 @@ public class CalibrationUI : MonoBehaviour
     public void SetPhysicalWorldSize(Vector3 size) { physicalWorldSize.text = Utils.Vector3ToString(size); }
     public void SetRotationOffset(Quaternion RotOff) { rotationOffset.text = Utils.QuaternionToString(RotOff); }
 
-    public void SetPointPos(int x, Vector3 pos)
-    {
-        pointsPositions[x].text = Utils.Vector3ToString(pos);
-    }
+    public void SetPointPos(int x, Vector3 pos) { pointsPositions[x].text = Utils.Vector3ToString(pos); }
 }

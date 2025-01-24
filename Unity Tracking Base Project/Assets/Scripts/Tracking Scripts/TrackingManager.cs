@@ -300,6 +300,11 @@ public class TrackingManager : MonoBehaviour
         {
             Debug.Log("Calibration points are not consistent please calibrate again.");
         }
+
+        for (int i = 0; i < 5; i++)
+        {
+            calibrationUI.SetPointPos(i, new Vector3(0,0,0));
+        }
     }
 
     //select the player that will move when trackingDisabled (default player 1)

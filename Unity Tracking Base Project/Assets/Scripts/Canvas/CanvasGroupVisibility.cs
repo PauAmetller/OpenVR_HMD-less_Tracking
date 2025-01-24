@@ -13,7 +13,9 @@ public class CanvasGroupVisibility : MonoBehaviour
         else
         {
             if (gameObject.name == "Calibration Points Info" && CanvasGroupManager.Instance.GetCurrentCanvasGroup() != "Tracking Menú")
-            gameObject.SetActive(false);
+                gameObject.SetActive(true);
+            else
+                gameObject.SetActive(false);
         }
     }
 }
