@@ -242,19 +242,19 @@ public class TrackingManager : MonoBehaviour
     {
         bool start = true;
 
-        // Check if tracking is enabled
-        if (!enableTracking)
-        {
-            Debug.Log("Tracking is not enabled");
-            start = false;
-        }
+        //// Check if tracking is enabled
+        //if (!enableTracking)
+        //{
+        //    Debug.Log("Tracking is not enabled");
+        //    start = false;
+        //}
 
-        // Check if the number of players is valid
-        if (numberOfPlayers != 1)
-        {
-            Debug.Log("Calibration requires having only 1 tracker activated");
-            start = false;
-        }
+        //// Check if the number of players is valid
+        //if (numberOfPlayers != 1)
+        //{
+        //    Debug.Log("Calibration requires having only 1 tracker activated");
+        //    start = false;
+        //}
 
         // If all conditions are met, start calibration
         if (start)
@@ -283,8 +283,7 @@ public class TrackingManager : MonoBehaviour
     {
         calibrationManager.SaveCalibrationPoints(players[0].GetComponent<PlayerMovement>().GetPosition());
         calibrationUI.SetPointPos(4, players[0].GetComponent<PlayerMovement>().GetPosition());
-        //calibrationManager.HideCalibrateElements();
-        calibrationManager.ShowInstructions(5);
+        calibrationManager.HideCalibrateElements();
 
         if (calibrationManager.CheckConsistenceOfCalibrationPoints())
         {

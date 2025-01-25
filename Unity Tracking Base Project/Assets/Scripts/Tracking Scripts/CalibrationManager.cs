@@ -25,8 +25,7 @@ public class CalibrationManager : MonoBehaviour
     /// </summary>
     public void ShowInstructions(int step)
     {
-        if(step != 5)
-            circlePositionManager.MoveCircles(step);
+        circlePositionManager.MoveCircles(step);
 
         if (step == 0)
         {
@@ -48,44 +47,9 @@ public class CalibrationManager : MonoBehaviour
         {
             canvasGroupManager.SwitchCanvas("Tracking Step 5");
         }
-        else if (step == 5)
-        {
-            canvasGroupManager.SwitchCanvas("Tracking Menú");
-            circlePositionManager.DeactivatePulsatingCircle();
-        }
 
         GiveInstructions(step);
     }
-
-    ///// <summary>
-    ///// Activates the visual representation of a calibration point.
-    ///// </summary>
-    //private void ShowPoint(int pointIndex)
-    //{
-    //    if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
-    //    {
-    //        pointsVisuals[pointIndex].SetActive(true); // Activate the point's visual
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
-    //    }
-    //}
-
-    ///// <summary>
-    ///// Activates the visual representation of a calibration point.
-    ///// </summary>
-    //private void HidePoint(int pointIndex)
-    //{
-    //    if (pointIndex < pointsVisuals.Count && pointsVisuals[pointIndex] != null)
-    //    {
-    //        pointsVisuals[pointIndex].SetActive(false); // Activate the point's visual
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning($"Point index {pointIndex} is out of range or null.");
-    //    }
-    //}
 
     /// <summary>
     /// Provides instructions for the current step of calibration.
@@ -102,15 +66,11 @@ public class CalibrationManager : MonoBehaviour
     ///// <summary>
     ///// Hides all visual elements used for the calibration process.
     ///// </summary>
-    //public void HideCalibrateElements()
-    //{
-    //    for (int pointIndex = 0; pointIndex < pointsVisuals.Count; pointIndex++)
-    //    {
-    //        HidePoint(pointIndex);
-    //    }
-
-    //    //Hide any other member that there could be
-    //}
+    public void HideCalibrateElements()
+    {
+        canvasGroupManager.SwitchCanvas("Tracking Menú");
+        circlePositionManager.DeactivatePulsatingCircle();
+    }
 
 
     /// <summary>

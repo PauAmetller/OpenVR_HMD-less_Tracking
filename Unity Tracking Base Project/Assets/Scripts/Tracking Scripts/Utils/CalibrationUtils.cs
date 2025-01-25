@@ -106,8 +106,7 @@ public static class CalibrationUtils
         if (maxDifference > 0.1f) // Tolerance for square consistency
             Debug.LogWarning("Square edges are inconsistent. Check calibration points.");
 
-        Vector3 centroid = CalibrationPointsUtils.ComputeCentroid(points.Take(4).ToArray());
-        float up = (centroid - points[4]).magnitude;
+        float up = CalibrationPointsUtils.GetDistanceFromPointToPlane(points);
 
         // Calculate average scale
         Vector3 realWorldScale = new Vector3(horizontal, up, vertical) ;
@@ -118,7 +117,7 @@ public static class CalibrationUtils
     private static Quaternion CalculateRotationMatrix(Vector3[] points)
     {
         // Approximate initial axes
-        Vector3 initialYAxis = CalibrationPointsUtils.GetNormalOfPlaneFormedBySquare(points.Take(4).ToArray());
+        Vector3 initialYAxis = CalibrationPointsUtils.GetNormalOfPlaneFormedBySquare(points.Take(5).ToArray());
         Vector3 horizontal1 = points[1] - points[0];
         Vector3 horizontal2 = points[2] - points[3];
         Vector3 initialXAxis = (horizontal1 + horizontal2).normalized;

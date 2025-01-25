@@ -15,29 +15,18 @@ public static class CalibrationPointsUtils
     /// </summary>
     public static bool CheckConsistenceOfCalibrationPoints(Vector3[] points)
     {
-        if(points.Length != 5)
-            throw new ArgumentException("There must be 5 calibration points.");
+        return CheckConsistencyOfTheBase(points);
+    }
 
-        Vector3[] squarePoints = points.Take(4).ToArray();
+    public static float GetDistanceFromPointToPlane(Vector3[] points)
+    {
+        Vector3 planeNormal = GetNormalOfPlaneFormedBySquare(points).normalized;
 
-        // Check the consistency of the rectangular base
-        CheckConsistencyOfTheBase(squarePoints);
+        Vector3 vecToPoint = points[0] - points[4];
 
-        // Compute the centroid of the points
-        Vector3 centroid = ComputeCentroid(points);
+        float distance = Mathf.Abs(Vector3.Dot(planeNormal, vecToPoint));
 
-        Vector3 squarePlaneNormal = GetNormalOfPlaneFormedBySquare(squarePoints);
-
-        // Get the fifth point
-        Vector3 fifthPoint = points[4];
-
-        // Calculate the vector from the centroid to the fifth point
-        Vector3 centroidToFifthPoint = fifthPoint - centroid;
-
-        // Use AreVectorsParalel to check if the vector aligns with the plane normal
-        bool isAligned = AreVectorsParalel(centroidToFifthPoint, squarePlaneNormal);
-
-        return isAligned;
+        return distance;
     }
 
     /// <summary>
@@ -46,7 +35,7 @@ public static class CalibrationPointsUtils
     private static bool CheckConsistencyOfTheBase(Vector3[] points)
     {
         // Check the angles formed by three points (for each pair of vectors)
-        for (int i = 0; i < points.Length; i++)
+        for (int i = 0; i < 4; i++)
         {
             Vector3 vec1 = points[i] - points[(i + 1) % 4];
             Vector3 vec2 = points[(i + 2) % 4] - points[(i + 1) % 4];
@@ -66,8 +55,8 @@ public static class CalibrationPointsUtils
     /// </summary>
     public static Vector3 GetNormalOfPlaneFormedBySquare(Vector3[] squarePoints)
     {
-        if (squarePoints.Length != 4)
-            throw new ArgumentException("The squarePoints array must contain exactly 4 points and it has " + squarePoints.Length + " points.");
+        if (squarePoints.Length != 5)
+            throw new ArgumentException("The squarePoints array must contain exactly 5 points and it has " + squarePoints.Length + " points.");
 
         // Calculate normals for each triangle
         Vector3[] normals = new Vector3[]
@@ -78,26 +67,26 @@ public static class CalibrationPointsUtils
         Vector3.Cross(squarePoints[2] - squarePoints[3], squarePoints[0] - squarePoints[3]).normalized
         };
 
-        // Use the first normal as the reference
-        Vector3 referenceNormal = normals[0];
 
-        // Align all normals to the reference
+        // Ensure the normal faces towards the fifth point
+        Vector3 directionToFifthPoint = squarePoints[4] - squarePoints[0]; ;
+
+        if (Vector3.Dot(normals[0], directionToFifthPoint) < 0)
+        {
+            normals[0] = -normals[0]; // Flip the normal
+        }
+
+
+        // Align all normals to the reference (normals[0])
         for (int i = 1; i < normals.Length; i++)
         {
-            if (Vector3.Dot(referenceNormal, normals[i]) < 0) // Dot product < 0 means opposite direction
+            if (Vector3.Dot(normals[0], normals[i]) < 0) // Dot product < 0 means opposite direction
             {
                 normals[i] = -normals[i]; // Flip the normal
             }
         }
 
         Vector3 averageNormal = normals.Aggregate(Vector3.zero, (sum, n) => sum + n).normalized;
-
-        // Ensure the vector points upward (positive Y direction), the vector may not be pointing up always but due to the physical equipment
-        // it should'nt be possible to get a negative y for the normal so it solves the orientation between up and down
-        if (averageNormal.y < 0)
-        {
-            averageNormal = -averageNormal;
-        }
 
         return averageNormal;
     }
@@ -112,18 +101,6 @@ public static class CalibrationPointsUtils
 
         // Check if the dot product is close to zero, indicating perpendicular vectors (right angle)
         return Mathf.Abs(dotProduct) <= Tolerance;
-    }
-
-    /// <summary>
-    /// Calculate and check if the vectors are paralel (dot product close to one)
-    /// </summary>
-    private static bool AreVectorsParalel(Vector3 vec1, Vector3 vec2)
-    {
-        // Calculate the dot product between the two vectors
-        float dotProduct = Vector3.Dot(vec1.normalized, vec2.normalized);
-
-        // Check if the dot product is close to zero, indicating perpendicular vectors (right angle)
-        return Mathf.Abs(dotProduct) >= 1 - Tolerance;
     }
 
     /// <summary>
