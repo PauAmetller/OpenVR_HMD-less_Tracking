@@ -14,18 +14,50 @@ namespace trk{
         std::vector<float> quaternion;
         float w, x, y, z;
         
-        w = sqrt( std::max( 0.f, 1 + mat.m[0][0] + mat.m[1][1] + mat.m[2][2] ) ) / 2;
-        x = sqrt( std::max( 0.f, 1 + mat.m[0][0] - mat.m[1][1] - mat.m[2][2] ) ) / 2;
-        y = sqrt( std::max( 0.f, 1 - mat.m[0][0] + mat.m[1][1] - mat.m[2][2] ) ) / 2;
-        z = sqrt( std::max( 0.f, 1 - mat.m[0][0] - mat.m[1][1] + mat.m[2][2] ) ) / 2;
-        x = copysign(x, mat.m[2][1] - mat.m[1][2]);
-        y = copysign(y, mat.m[0][2] - mat.m[2][0]);
-        z = copysign( z, mat.m[1][0] - mat.m[0][1]);
-        
+        float trace = mat.m[0][0] + mat.m[1][1] + mat.m[2][2];
+
+        if (trace > 0) {  //Its positive
+            double s = 0.5 / sqrt(1.0 + trace);
+            w = 0.25 / s;
+            x = (mat.m[2][1] - mat.m[1][2]) * s;
+            y = (mat.m[0][2] - mat.m[2][0]) * s;
+            z = (mat.m[1][0] - mat.m[0][1]) * s;
+        }
+        else {
+            if ((mat.m[0][0] > mat.m[1][1]) && (mat.m[0][0] > mat.m[2][2])) {
+                float s = sqrt(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]) * 2; // s = 4 * x;
+                w = (mat.m[2][1] - mat.m[1][2]) / s;
+                x = 0.25f * s;
+                y = (mat.m[0][1] + mat.m[1][0]) / s;
+                z = (mat.m[0][2] + mat.m[2][0]) / s;
+            }
+            else if (mat.m[1][1] > mat.m[2][2]) {
+                float s = sqrt(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]) * 2; // s = 4 * y;
+                w = (mat.m[0][2] - mat.m[2][0]) / s;
+                x = (mat.m[0][1] + mat.m[1][0]) / s;
+                y = 0.25f * s;
+                z = (mat.m[1][2] + mat.m[2][1]) / s;
+            }
+            else {
+                float s = sqrt(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]) * 2; // s = 4 * z;
+                w = (mat.m[1][0] - mat.m[0][1]) / s;
+                x = (mat.m[0][2] + mat.m[2][0]) / s;
+                y = (mat.m[1][2] + mat.m[2][1]) / s;
+                z = 0.25f * s;
+            }
+        }
+
+        float length = sqrt(w * w + x * x + y * y + z * z);
+        w /= length; 		
+        x /= length; 		
+        y /= length; 		
+        z /= length;
+
         quaternion.push_back(x);
         quaternion.push_back(y);
         quaternion.push_back(z);
         quaternion.push_back(w);
+
         return quaternion;
     }
 
