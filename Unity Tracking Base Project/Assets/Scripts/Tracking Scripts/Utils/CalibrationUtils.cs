@@ -30,7 +30,7 @@ public static class CalibrationUtils
         return calibratedPos;
     }
 
-    private static Vector2 ApplyCalibrationTransform(Vector3 rawPos, Calibration calibration)
+    private static Vector3 ApplyCalibrationTransform(Vector3 rawPos, Calibration calibration)
     {
         return calibration.GetCalibrationRotation() * (rawPos - calibration.GetCalibrationCenter());
     }
