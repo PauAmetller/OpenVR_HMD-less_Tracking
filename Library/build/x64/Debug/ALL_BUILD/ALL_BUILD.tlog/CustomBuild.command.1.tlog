@@ -1,0 +1,10 @@
+^C:\USERS\PAUAM\DOCUMENTS\GITHUB\TFG\OPENVR_HMD-LESS_TRACKING_LIBRARY\LIBRARY\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library -BC:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library/build --check-stamp-file C:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

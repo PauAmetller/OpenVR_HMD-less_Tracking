@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\pauam\Documents\GitHub\TFG\OpenVR_HMD-less_Tracking_Library\Library\build\CMakeFiles\cc993af1e1f995622996fe7dda082c0f\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{11D35D1C-9313-334E-8886-58EAE41F3107}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

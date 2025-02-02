@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\pauam\Documents\GitHub\TFG\OpenVR_HMD-less_Tracking_Library\Library\src\VrSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\pauam\Documents\GitHub\TFG\OpenVR_HMD-less_Tracking_Library\Library\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\pauam\Documents\GitHub\TFG\OpenVR_HMD-less_Tracking_Library\Library\src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\pauam\Documents\GitHub\TFG\OpenVR_HMD-less_Tracking_Library\Library\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E39E3432-E7AC-3B30-8A53-2BE7D5518681}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

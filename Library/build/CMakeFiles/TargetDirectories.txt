@@ -1,0 +1,3 @@
+C:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library/build/CMakeFiles/tracking.dir
+C:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/pauam/Documents/GitHub/TFG/OpenVR_HMD-less_Tracking_Library/Library/build/CMakeFiles/ZERO_CHECK.dir
