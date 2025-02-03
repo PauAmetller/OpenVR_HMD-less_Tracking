@@ -53,10 +53,18 @@ namespace trk{
         y /= length; 		
         z /= length;
 
-        quaternion.push_back(1.0f);
-        quaternion.push_back(1.0f);
-        quaternion.push_back(1.0f);
-        quaternion.push_back(1.0f);
+        // Ensure consistent sign (fixes sudden flips)
+        if (w < 0) {
+            w = -w;
+            x = -x;
+            y = -y;
+            z = -z;
+        }
+
+        quaternion.push_back(w);
+        quaternion.push_back(x);
+        quaternion.push_back(y);
+        quaternion.push_back(z);
 
         return quaternion;
     }
