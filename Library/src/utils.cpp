@@ -53,10 +53,10 @@ namespace trk{
         y /= length; 		
         z /= length;
 
-        quaternion.push_back(x);
-        quaternion.push_back(y);
-        quaternion.push_back(z);
-        quaternion.push_back(w);
+        quaternion.push_back(1.0f);
+        quaternion.push_back(1.0f);
+        quaternion.push_back(1.0f);
+        quaternion.push_back(1.0f);
 
         return quaternion;
     }
