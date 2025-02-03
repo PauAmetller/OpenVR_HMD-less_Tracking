@@ -25,21 +25,21 @@ namespace trk{
         }
         else {
             if ((mat.m[0][0] > mat.m[1][1]) && (mat.m[0][0] > mat.m[2][2])) {
-                float s = sqrt(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]) * 2; // s = 4 * x;
+                float s = sqrt(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]) * 2.0f; // s = 4 * x;
                 w = (mat.m[2][1] - mat.m[1][2]) / s;
                 x = 0.25f * s;
                 y = (mat.m[0][1] + mat.m[1][0]) / s;
                 z = (mat.m[0][2] + mat.m[2][0]) / s;
             }
             else if (mat.m[1][1] > mat.m[2][2]) {
-                float s = sqrt(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]) * 2; // s = 4 * y;
+                float s = sqrt(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]) * 2.0f; // s = 4 * y;
                 w = (mat.m[0][2] - mat.m[2][0]) / s;
                 x = (mat.m[0][1] + mat.m[1][0]) / s;
                 y = 0.25f * s;
                 z = (mat.m[1][2] + mat.m[2][1]) / s;
             }
             else {
-                float s = sqrt(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]) * 2; // s = 4 * z;
+                float s = sqrt(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]) * 2.0f; // s = 4 * z;
                 w = (mat.m[1][0] - mat.m[0][1]) / s;
                 x = (mat.m[0][2] + mat.m[2][0]) / s;
                 y = (mat.m[1][2] + mat.m[2][1]) / s;
@@ -48,23 +48,19 @@ namespace trk{
         }
 
         float length = sqrt(w * w + x * x + y * y + z * z);
-        w /= length; 		
-        x /= length; 		
-        y /= length; 		
-        z /= length;
 
-        // Ensure consistent sign (fixes sudden flips)
-        if (w < 0) {
-            w = -w;
-            x = -x;
-            y = -y;
-            z = -z;
+        if (length > 0.00001f) {  // Prevent division by zero
+            w /= length;
+            x /= length;
+            y /= length;
+            z /= length;
         }
 
-        quaternion.push_back(w);
+
         quaternion.push_back(x);
         quaternion.push_back(y);
-        quaternion.push_back(z);
+        quaternion.push_back(-z);  //Unity is left-handed, so we reverse the z
+        quaternion.push_back(w);
 
         return quaternion;
     }
