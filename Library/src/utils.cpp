@@ -12,9 +12,9 @@ namespace trk{
 
     std::vector<float> getQuaternionFromMatrix(vr::HmdMatrix34_t mat) {
         std::vector<float> quaternion;
-        float w, x, y, z;
+        double w, x, y, z;
         
-        float trace = mat.m[0][0] + mat.m[1][1] + mat.m[2][2];
+        double trace = mat.m[0][0] + mat.m[1][1] + mat.m[2][2];
 
         if (trace > 0) {  //Its positive
             double s = 0.5 / sqrt(1.0 + trace);
@@ -25,21 +25,21 @@ namespace trk{
         }
         else {
             if ((mat.m[0][0] > mat.m[1][1]) && (mat.m[0][0] > mat.m[2][2])) {
-                float s = sqrt(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]) * 2.0f; // s = 4 * x;
+                double s = sqrt(1.0f + mat.m[0][0] - mat.m[1][1] - mat.m[2][2]) * 2.0f; // s = 4 * x;
                 w = (mat.m[2][1] - mat.m[1][2]) / s;
                 x = 0.25f * s;
                 y = (mat.m[0][1] + mat.m[1][0]) / s;
                 z = (mat.m[0][2] + mat.m[2][0]) / s;
             }
             else if (mat.m[1][1] > mat.m[2][2]) {
-                float s = sqrt(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]) * 2.0f; // s = 4 * y;
+                double s = sqrt(1.0f + mat.m[1][1] - mat.m[0][0] - mat.m[2][2]) * 2.0f; // s = 4 * y;
                 w = (mat.m[0][2] - mat.m[2][0]) / s;
                 x = (mat.m[0][1] + mat.m[1][0]) / s;
                 y = 0.25f * s;
                 z = (mat.m[1][2] + mat.m[2][1]) / s;
             }
             else {
-                float s = sqrt(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]) * 2.0f; // s = 4 * z;
+                double s = sqrt(1.0f + mat.m[2][2] - mat.m[0][0] - mat.m[1][1]) * 2.0f; // s = 4 * z;
                 w = (mat.m[1][0] - mat.m[0][1]) / s;
                 x = (mat.m[0][2] + mat.m[2][0]) / s;
                 y = (mat.m[1][2] + mat.m[2][1]) / s;
@@ -47,7 +47,7 @@ namespace trk{
             }
         }
 
-        float length = sqrt(w * w + x * x + y * y + z * z);
+        double length = sqrt(w * w + x * x + y * y + z * z);
 
         if (length > 0.00001f) {  // Prevent division by zero
             w /= length;
@@ -57,10 +57,10 @@ namespace trk{
         }
 
 
-        quaternion.push_back(x);
-        quaternion.push_back(y);
-        quaternion.push_back(-z);  //Unity is left-handed, so we reverse the z
-        quaternion.push_back(w);
+        quaternion.push_back((float)x);
+        quaternion.push_back((float)y);
+        quaternion.push_back((float)-z);  //Unity is left-handed, so we reverse the z
+        quaternion.push_back((float)-w);
 
         return quaternion;
     }
