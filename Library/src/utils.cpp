@@ -58,8 +58,8 @@ namespace trk{
 
 
         quaternion.push_back((float)x);
-        quaternion.push_back((float)y);
-        quaternion.push_back((float)-z);  //Unity is left-handed, so we reverse the z
+        quaternion.push_back((float)-z);
+        quaternion.push_back((float)y); 
         quaternion.push_back((float)-w);
 
         return quaternion;
