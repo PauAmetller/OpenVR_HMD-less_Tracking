@@ -69,6 +69,9 @@ namespace trk{
         std::vector<float> positionsQuaternions;
         for (uint32_t i : trackerIndexes) {
             vr::HmdMatrix34_t mat = poses[i].mDeviceToAbsoluteTracking;
+
+            std::vector<float> quat = getQuaternionFromMatrix(mat);
+
             //apply bools
             if (invertX) {
                 mat.m[0][0] = -mat.m[0][0];
@@ -100,7 +103,6 @@ namespace trk{
                 mat.m[2][3] = tempXw;
             }
 
-            std::vector<float> quat = getQuaternionFromMatrix(mat);
             positionsQuaternions.push_back(mat.m[0][3]);
             positionsQuaternions.push_back(mat.m[1][3]);
             positionsQuaternions.push_back(mat.m[2][3]);
