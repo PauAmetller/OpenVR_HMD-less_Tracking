@@ -259,6 +259,7 @@ public class TrackingManager : MonoBehaviour
         // If all conditions are met, start calibration
         if (start)
         {
+            calibrated = false;
             calibrationManager.ShowInstructions(0);
         }
     }
