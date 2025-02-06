@@ -58,8 +58,8 @@ namespace trk{
 
 
         quaternion.push_back((float)x);
-        quaternion.push_back((float)-z);
-        quaternion.push_back((float)y); 
+        quaternion.push_back((float)y);
+        quaternion.push_back((float)-z); 
         quaternion.push_back((float)-w);
 
         return quaternion;
@@ -74,15 +74,15 @@ namespace trk{
 
             //apply bools
             if (invertX) {
-                mat.m[0][0] = -mat.m[0][0];
+                /*mat.m[0][0] = -mat.m[0][0];
                 mat.m[0][1] = -mat.m[0][1];
-                mat.m[0][2] = -mat.m[0][2];
+                mat.m[0][2] = -mat.m[0][2];*/
                 mat.m[0][3] = -mat.m[0][3];
             }
             if (invertZ) {
-                mat.m[2][0] = -mat.m[2][0];
+                /*mat.m[2][0] = -mat.m[2][0];
                 mat.m[2][1] = -mat.m[2][1];
-                mat.m[2][2] = -mat.m[2][2];
+                mat.m[2][2] = -mat.m[2][2];*/
                 mat.m[2][3] = -mat.m[2][3];
             }
             if (flipXZ) {

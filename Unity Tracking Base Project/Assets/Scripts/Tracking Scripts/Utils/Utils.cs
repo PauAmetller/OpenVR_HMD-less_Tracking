@@ -24,22 +24,22 @@ public static class Utils
     public static string QuaternionToString(Quaternion q)
     {
         //// Show only 2 decimal points
-        //float x = Mathf.Round(q.x * 100f) / 100f;
-        //float y = Mathf.Round(q.y * 100f) / 100f;
-        //float z = Mathf.Round(q.z * 100f) / 100f;
-        //float w = Mathf.Round(q.w * 100f) / 100f;
-        //return $"({x} , {y} , {z}, {w})";
+        float x = Mathf.Round(q.x * 100f) / 100f;
+        float y = Mathf.Round(q.y * 100f) / 100f;
+        float z = Mathf.Round(q.z * 100f) / 100f;
+        float w = Mathf.Round(q.w * 100f) / 100f;
+        return $"({x} , {y} , {z}, {w})";
 
         // Convert quaternion to Euler angles
-        Vector3 eulerAngles = q.eulerAngles;
+        //Vector3 eulerAngles = q.eulerAngles;
 
-        // Show only 2 decimal points
-        float x = Mathf.Round(eulerAngles.x * 100f) / 100f;
-        float y = Mathf.Round(eulerAngles.y * 100f) / 100f;
-        float z = Mathf.Round(eulerAngles.z * 100f) / 100f;
+        //// Show only 2 decimal points
+        //float x = Mathf.Round(eulerAngles.x * 100f) / 100f;
+        //float y = Mathf.Round(eulerAngles.y * 100f) / 100f;
+        //float z = Mathf.Round(eulerAngles.z * 100f) / 100f;
 
         // Format as a string
-        return $"({x}, {y}, {z})";
+        //return $"({x}, {y}, {z})";
     }
 
     // ==== Ends: To string utilities Block ====

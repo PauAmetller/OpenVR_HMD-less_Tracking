@@ -24,8 +24,8 @@ public static class CalibrationUtils
         // Apply scaling to the position
         calibratedPos = ApplyScale(calibratedPos, calibration.GetCalibrationRealWorldSize(), virtualWorldSpace);
 
-        // Apply the Y offset and decide if Y should be enabled or set to zero
-        calibratedPos.y = enableYAxis ? (rawPos.y - calibration.GetCalibrationCenter().y) : 0;
+        if(!enableYAxis)
+            calibratedPos.y = 0;
 
         return calibratedPos;
     }
@@ -121,8 +121,8 @@ public static class CalibrationUtils
         Vector3 horizontal1 = points[1] - points[0];
         Vector3 horizontal2 = points[2] - points[3];
         Vector3 initialXAxis = (horizontal1 + horizontal2).normalized;
-        Vector3 vertical1 = points[2] - points[1];
-        Vector3 vertical2 = points[3] - points[0];
+        Vector3 vertical1 = points[1] - points[2];
+        Vector3 vertical2 = points[0] - points[3];
         Vector3 initialZAxis = (vertical1 + vertical2).normalized;
 
         // Gram-Schmidt with averaging to minimize deviation
@@ -131,12 +131,19 @@ public static class CalibrationUtils
         Vector3 z = initialZAxis;
 
         // Orthogonalize axes iteratively
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 3; i++)
         {
             // Adjust each axis to be orthogonal to the others
             x = (x - Vector3.Dot(x, y) * y - Vector3.Dot(x, z) * z).normalized;
             y = (y - Vector3.Dot(y, x) * x - Vector3.Dot(y, z) * z).normalized;
             z = (z - Vector3.Dot(z, x) * x - Vector3.Dot(z, y) * y).normalized;
+        }
+
+        //Once axes are almost orthogonalized, do the following to force them to be completely orthogonal
+        z = Vector3.Cross(x, y).normalized;
+        if (Vector3.Dot(z, initialZAxis) < 0)
+        {
+            z = -z;
         }
 
         // Construct the rotation matrix
