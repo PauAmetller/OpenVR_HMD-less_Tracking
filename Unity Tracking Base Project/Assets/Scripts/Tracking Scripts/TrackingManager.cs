@@ -172,7 +172,7 @@ public class TrackingManager : MonoBehaviour
                 // Get position from openvr array
                 Vector3 playersRawPosition = new Vector3(openVrOutputArr[0 + playerIndex], openVrOutputArr[1 + playerIndex], openVrOutputArr[2 + playerIndex]);
 
-                Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], -openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
+                Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
 
                 if (calibrated)
                 {
@@ -374,7 +374,7 @@ for (int i = 0; i < 5; i++)
     {
         if (calibrated)
         {
-            CalibrationUtils.SaveCalibrationJson(calibration, calibrationSaveFilePath);
+            CalibrationUtils.SaveCalibrationJson(calibration, fullCalibrationSaveFilePath);
             calibrationUI.SetCalibrationFileStatus("Calibration Saved");
         }
         else

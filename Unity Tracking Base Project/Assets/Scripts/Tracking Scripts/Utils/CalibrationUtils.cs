@@ -121,8 +121,8 @@ public static class CalibrationUtils
         Vector3 horizontal1 = points[1] - points[0];
         Vector3 horizontal2 = points[2] - points[3];
         Vector3 initialXAxis = (horizontal1 + horizontal2).normalized;
-        Vector3 vertical1 = points[1] - points[2];
-        Vector3 vertical2 = points[0] - points[3];
+        Vector3 vertical1 = points[2] - points[1];
+        Vector3 vertical2 = points[3] - points[0];
         Vector3 initialZAxis = (vertical1 + vertical2).normalized;
 
         // Gram-Schmidt with averaging to minimize deviation

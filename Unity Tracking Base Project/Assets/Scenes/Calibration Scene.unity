@@ -2693,7 +2693,7 @@ MonoBehaviour:
   numberOfPlayers: 1
   numberOfBaseStations: 4
   enableRotation: 1
-  enableYAxis: 0
+  enableYAxis: 1
   swapXZ: 0
   invertX: 0
   invertZ: 1
