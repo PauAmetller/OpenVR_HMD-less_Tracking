@@ -111,7 +111,7 @@ public static class CalibrationUtils
         // Calculate average scale
         Vector3 realWorldScale = new Vector3(horizontal, up, vertical) ;
 
-        return realWorldScale * (10f/9f); //Rebuild scale from 90% to 100% of the screen size
+        return new Vector3(realWorldScale.x * (10f/9f), realWorldScale.y , realWorldScale.z * (10f / 9f)); //Rebuild scale from 90% to 100% of the screen size
     }
 
     private static Quaternion CalculateRotationMatrix(Vector3[] points)
@@ -180,9 +180,10 @@ public static class CalibrationUtils
     /// </summary>
     public static void SaveCalibrationJson(Calibration calibrationData, string fullCalibrationSaveFilePath)
     {
-        string jsonString = JsonConvert.SerializeObject(calibrationData, Formatting.Indented); 
+        string jsonString = JsonUtility.ToJson(calibrationData);
         File.WriteAllText(fullCalibrationSaveFilePath, jsonString);
     }
+
 
     // ==== Ends: Save File Block ====
 }

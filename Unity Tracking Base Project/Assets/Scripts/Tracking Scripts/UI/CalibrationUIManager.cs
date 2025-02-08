@@ -31,6 +31,12 @@ public class CalibrationUIManager : MonoBehaviour
         if (calibrationUI_1 == null || calibrationUI_2 == null)
             GetUIsReferences();
     }
+
+    public void Uncalibrated()
+    {
+        calibrationUI_1.Uncalibrated();
+        calibrationUI_2.Uncalibrated();
+    }
     public void SetNumberOfBaseStations(string numBaseStations)
     {
         CheckReferences();

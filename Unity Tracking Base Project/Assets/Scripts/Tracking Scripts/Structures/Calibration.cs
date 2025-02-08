@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 //Data can only be modified by setters
 public struct Calibration
 {
-    public Vector3 CalibrationCenter { get; private set; }  //Center of the scene
-    public Vector3 CalibrationRealWorldSize { get; private set; }  //Scale comparing real world and 1, so final scale will be application size / scale
-    public Quaternion CalibrationRotation { get; private set; } // Rotation diference in a quaternion
+    public Vector3 CalibrationCenter; //Center of the scene
+    public Vector3 CalibrationRealWorldSize; //Scale comparing real world and 1, so final scale will be application size / scale
+    public Quaternion CalibrationRotation; // Rotation diference in a quaternion
 
     public Calibration(Vector3 center, Vector3 realWorldSize, Quaternion matTransform)
     {

@@ -23,6 +23,11 @@ public class CalibrationUI : MonoBehaviour
 
     private void Start()
     {
+        Uncalibrated();
+    }
+
+    public void Uncalibrated()
+    {
         center.text = "Uncalibrated";
         physicalWorldSize.text = "Uncalibrated";
         rotationOffset.text = "Uncalibrated";

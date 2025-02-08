@@ -294,7 +294,7 @@ public class TrackingManager : MonoBehaviour
             UpdateCalibrationUICalibrationData();
 
             calibrated = true;
-            Debug.Log("Calibration completed.");
+            calibrationUI.SetCalibrationFileStatus("Calibration completed.");
     }
         else
         {
@@ -393,8 +393,13 @@ for (int i = 0; i < 5; i++)
         if (File.Exists(fullCalibrationSaveFilePath))
         {
             File.Delete(fullCalibrationSaveFilePath);
+            calibrationUI.SetCalibrationFileStatus("Calibration Removed");
+        } else
+        {
+            calibrationUI.SetCalibrationFileStatus("No Calibration File Found To Remove");
         }
         calibration.Clear();
+        calibrationUI.Uncalibrated();
         calibrated = false;
     }
 
