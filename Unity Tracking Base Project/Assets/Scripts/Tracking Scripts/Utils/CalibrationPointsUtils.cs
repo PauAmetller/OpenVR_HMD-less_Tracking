@@ -8,7 +8,7 @@ public static class CalibrationPointsUtils
     /// Tolerance for floating-point comparisons. Determines the allowable margin
     /// of error when checking geometric properties like perpendicularity or parallelism.
     /// </summary>
-    private const float Tolerance = 0.08f;
+    private const float Tolerance = 0.14f;
 
     /// <summary>
     /// Checks the consistency between the points
