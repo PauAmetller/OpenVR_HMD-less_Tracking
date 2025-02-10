@@ -2742,6 +2742,7 @@ Transform:
   - {fileID: 1726486662}
   - {fileID: 234860584}
   - {fileID: 1661620803}
+  - {fileID: 874372894}
   - {fileID: 706434631}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3489,6 +3490,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854250895}
   m_CullTransparentMesh: 1
+--- !u!1 &874372893
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 874372894}
+  - component: {fileID: 874372895}
+  m_Layer: 0
+  m_Name: Calibration Quad Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &874372894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874372893}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 755713256}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &874372895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874372893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7272fa1189c8ea4c875a5ec707999e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 3b706899eb3cbcc40a11ef82f33da747, type: 2}
+  parentObject: {fileID: 1249520545}
 --- !u!1 &895101517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5652,6 +5699,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213363181}
   m_CullTransparentMesh: 1
+--- !u!1 &1249520545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1249520546}
+  m_Layer: 0
+  m_Name: Calibration Quad
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1249520546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1249520545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1423390279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1259676485
 GameObject:
   m_ObjectHideFlags: 0
@@ -6498,6 +6576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circlePositionManager: {fileID: 1661620804}
+  calibrationQuadManager: {fileID: 874372895}
   canvasGroupManager: {fileID: 234860585}
 --- !u!1 &1358091799
 GameObject:
@@ -7108,7 +7187,6 @@ GameObject:
   - component: {fileID: 1423390278}
   - component: {fileID: 1423390277}
   - component: {fileID: 1423390276}
-  - component: {fileID: 1423390280}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -7200,30 +7278,11 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1249520546}
+  - {fileID: 1719013709}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1423390280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1423390275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 817bf421d2dfc5e4fb8fafe12cd647ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxRadius: 2
-  minRadius: 0.3
-  pulsationSpeed: 0.5
-  resolution: 100
-  circleCenter: {x: 20, y: 0, z: 20}
-  lineThickness: 0.3
-  lineMaterial: {fileID: 2100000, guid: cc1fafcdd36d30845bb81b58e597978e, type: 2}
-  startDelay: 0.5
-  active: 0
 --- !u!1 &1448399633
 GameObject:
   m_ObjectHideFlags: 0
@@ -8617,7 +8676,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aaafc7a9da64e46ba13a07c3fcd006, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pulsatingCircleScript: {fileID: 1423390280}
+  pulsatingCircleScript: {fileID: 1719013710}
 --- !u!1 &1712755335
 GameObject:
   m_ObjectHideFlags: 0
@@ -8768,6 +8827,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712755335}
   m_CullTransparentMesh: 1
+--- !u!1 &1719013708
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719013709}
+  - component: {fileID: 1719013710}
+  m_Layer: 0
+  m_Name: Pulsating Circles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719013709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719013708}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1423390279}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1719013710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719013708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 817bf421d2dfc5e4fb8fafe12cd647ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxRadius: 2
+  minRadius: 0.3
+  pulsationSpeed: 0.5
+  resolution: 100
+  circleCenter: {x: 20, y: 0, z: 20}
+  lineThickness: 0.3
+  lineMaterial: {fileID: 2100000, guid: cc1fafcdd36d30845bb81b58e597978e, type: 2}
+  startDelay: 0.5
+  active: 0
 --- !u!1 &1725989638
 GameObject:
   m_ObjectHideFlags: 0

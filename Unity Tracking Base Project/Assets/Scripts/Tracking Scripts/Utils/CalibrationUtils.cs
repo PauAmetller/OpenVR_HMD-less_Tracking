@@ -76,8 +76,9 @@ public static class CalibrationUtils
         //Calculate the Scale of the calibrated world
         calibrationData.SetCalibrationRealWorldSize(CalculateRealWorldSize(calibrationPoints, virtualWorldSpace));
 
-        //Calculate the CalibrationTransform
-        calibrationData.SetCalibrationRotation(CalculateRotationMatrix(calibrationPoints));
+        //Calculate the CalibrationRotation
+        Quaternion qRot = CalculateRotationMatrix(calibrationPoints);
+        calibrationData.SetCalibrationRotation(new Quaternion(-qRot.x, -qRot.y, -qRot.z, qRot.w));
 
         //Calculate rotation matrix
 

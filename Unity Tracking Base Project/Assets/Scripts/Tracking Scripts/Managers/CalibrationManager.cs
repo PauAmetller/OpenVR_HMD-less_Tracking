@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UIElements;
 
 
 public class CalibrationManager : MonoBehaviour
@@ -12,6 +13,7 @@ public class CalibrationManager : MonoBehaviour
     //////////////////////////////////////////
     [Header("Dependencies")]
     [SerializeField] private CirclePositionManager circlePositionManager;
+    [SerializeField] private CalibrationQuadManager calibrationQuadManager;
     [SerializeField] private CanvasGroupManager canvasGroupManager;
 
     //[Header("Calibration Points Visuals")]
@@ -79,6 +81,7 @@ public class CalibrationManager : MonoBehaviour
     public void SaveCalibrationPoints(Vector3 trackerPosition)
     {
         calibrationPoints.Add(trackerPosition);
+        calibrationQuadManager.CreateSphere(trackerPosition);
     }
 
     /// <summary>
