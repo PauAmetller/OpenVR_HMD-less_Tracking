@@ -3534,7 +3534,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7272fa1189c8ea4c875a5ec707999e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 3b706899eb3cbcc40a11ef82f33da747, type: 2}
+  material: {fileID: 2100000, guid: e2421affe2b74754b8ae37ae7f23e24d, type: 2}
   parentObject: {fileID: 1249520545}
 --- !u!1 &895101517
 GameObject:
@@ -8837,7 +8837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1719013709}
   - component: {fileID: 1719013710}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Pulsating Circles
   m_TagString: Untagged
   m_Icon: {fileID: 0}

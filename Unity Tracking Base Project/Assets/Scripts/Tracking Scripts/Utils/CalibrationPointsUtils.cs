@@ -37,8 +37,8 @@ public static class CalibrationPointsUtils
         // Check the angles formed by three points (for each pair of vectors)
         for (int i = 0; i < 4; i++)
         {
-            Vector3 vec1 = points[i] - points[(i + 1) % 4];
-            Vector3 vec2 = points[(i + 2) % 4] - points[(i + 1) % 4];
+            Vector3 vec1 = points[(i + 1) % 4] - points[i];  
+            Vector3 vec2 = points[(i + 1) % 4] - points[(i + 2) % 4];
 
             // If the angle is close to 90 degrees, return true
             if (!AreVectorsPerpendicular(vec1, vec2))

@@ -293,6 +293,8 @@ public class TrackingManager : MonoBehaviour
 
             UpdateCalibrationUICalibrationData();
 
+            calibrationManager.CalibrationQuadLiberation(calibration, virtualWorldSpace);
+
             calibrated = true;
             calibrationUI.SetCalibrationFileStatus("Calibration completed.");
     }

@@ -74,6 +74,14 @@ public class CalibrationManager : MonoBehaviour
         circlePositionManager.DeactivatePulsatingCircle();
     }
 
+    ///// <summary>
+    ///// Resizes the calibration quad to the actual calibration
+    ///// </summary>
+    public void CalibrationQuadLiberation(Calibration calibrationData, Vector3 virtualWorldSpace)
+    {
+        calibrationQuadManager.LerpToCalibratedPosition(calibrationData, virtualWorldSpace);
+    }
+
 
     /// <summary>
     /// Saves the calibration points.

@@ -26,37 +26,15 @@ public class CalibrationQuadManager : MonoBehaviour
 
         // Create a new sphere primitive
         GameObject newSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        //GameObject newGhostSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
         // Set its position and scale
         newSphere.transform.position = position;
         newSphere.transform.localScale = new Vector3(2f, 2f, 2f);
         newSphere.GetComponent<Renderer>().material = material;
 
-        //newGhostSphere.transform.position = position;
-        //newGhostSphere.transform.localScale = new Vector3(2f, 2f, 2f);
-        //Renderer ghostMeshRenderer = newGhostSphere.GetComponent<Renderer>(); ;
-        //ghostMeshRenderer.material = ghostMaterial;
-
-
-        //ghostMeshRenderer.material.SetFloat("_Mode", 3); // 3 corresponds to Transparent mode
-        //ghostMeshRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        //ghostMeshRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        //ghostMeshRenderer.material.SetInt("_ZWrite", 0);
-        //ghostMeshRenderer.material.SetInt("_Cull", (int)UnityEngine.Rendering.CullMode.Off);
-        //ghostMeshRenderer.material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Always);
-
-        //ghostMeshRenderer.material.DisableKeyword("_ALPHATEST_ON");
-        //ghostMeshRenderer.material.EnableKeyword("_ALPHABLEND_ON");
-        //ghostMeshRenderer.material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        //ghostMeshRenderer.material.renderQueue = 3100;
-
-
-
         spherePoints.Add(newSphere); // Add to list
 
         newSphere.transform.SetParent(sphereParent.transform);
-        //newGhostSphere.transform.SetParent(sphereParent.transform);
 
         if (parentObject != null)
         {
@@ -76,11 +54,6 @@ public class CalibrationQuadManager : MonoBehaviour
             return;
         }
 
-        // Get the positions of the four corner points from the main spheres
-        Vector3 p1 = spherePoints[0].transform.position;
-        Vector3 p2 = spherePoints[1].transform.position;
-        Vector3 p3 = spherePoints[2].transform.position;
-        Vector3 p4 = spherePoints[3].transform.position;
 
         GameObject sphereParent = new GameObject("QuadParent");
 
@@ -91,8 +64,32 @@ public class CalibrationQuadManager : MonoBehaviour
         // Add a MeshFilter and MeshRenderer components
         MeshFilter meshFilter = quadObject.AddComponent<MeshFilter>();
         MeshRenderer meshRenderer = quadObject.AddComponent<MeshRenderer>();
-        MeshFilter ghostMeshFilter = ghostQuadObject.AddComponent<MeshFilter>();
-        MeshRenderer ghostMeshRenderer = ghostQuadObject.AddComponent<MeshRenderer>();
+
+        // Set the mesh to the MeshFilter
+        meshFilter.mesh = createQuadMesh();
+
+        // Apply the material to the mesh renderer
+        meshRenderer.material = material;
+        Color newColor = meshRenderer.material.color;
+        newColor.a *= 2;
+        meshRenderer.material.color = newColor;
+
+        quadObject.transform.SetParent(sphereParent.transform);
+
+        if (parentObject != null)
+        {
+            sphereParent.transform.SetParent(parentObject.transform);
+        }
+    }
+
+    private Mesh createQuadMesh()
+    {
+
+        // Get the positions of the four corner points from the main spheres
+        Vector3 p1 = spherePoints[0].transform.position;
+        Vector3 p2 = spherePoints[1].transform.position;
+        Vector3 p3 = spherePoints[2].transform.position;
+        Vector3 p4 = spherePoints[3].transform.position;
 
         // Create the mesh
         Mesh mesh = new Mesh();
@@ -135,25 +132,47 @@ public class CalibrationQuadManager : MonoBehaviour
             }
         }
 
-        // Set the mesh to the MeshFilter
-        meshFilter.mesh = mesh;
-        ghostMeshFilter.mesh = mesh;
+        return mesh;
+    }
 
-        // Apply the material to the mesh renderer
-        meshRenderer.material = material;
-        //ghostMeshRenderer.material = ghostMaterial;
-
-        //ghostMeshRenderer.material.SetInt("_ZWrite", 0); // Disable depth writing
-        //ghostMeshRenderer.material.SetInt("_ZTest", (int)UnityEngine.Rendering.CompareFunction.Greater); // Render behind
-        //ghostMeshRenderer.material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        //ghostMeshRenderer.material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-
-        quadObject.transform.SetParent(sphereParent.transform);
-        //ghostQuadObject.transform.SetParent(sphereParent.transform);
-
-        if (parentObject != null)
+    public void LerpToCalibratedPosition(Calibration calibrationData, Vector3 virtualWorldSpace)
+    {
+        float duration = 2.0f;
+        foreach (var sphere in spherePoints)
         {
-            sphereParent.transform.SetParent(parentObject.transform);
+            StartCoroutine(SphereLerpToCalibratedPosition(sphere, calibrationData, virtualWorldSpace, duration));
+        }
+        StartCoroutine(UpdateMeshForDuration(duration));
+    }
+
+    private IEnumerator SphereLerpToCalibratedPosition(GameObject sphere, Calibration calibrationData, Vector3 virtualWorldSpace, float duration)
+    {
+        Vector3 startPos = sphere.transform.position;
+        Vector3 targetPos = CalibrationUtils.CalibrateRawPos(startPos, true, calibrationData, virtualWorldSpace);
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            sphere.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure the final position is set correctly
+        sphere.transform.position = targetPos;
+    }
+
+    private IEnumerator UpdateMeshForDuration(float duration)
+    {
+        float elapsedTime = 0f;
+        MeshFilter meshFilter = quadObject.GetComponent<MeshFilter>();
+
+        while (elapsedTime < duration)
+        {
+            meshFilter.mesh = createQuadMesh();
+            elapsedTime += Time.deltaTime;
+            yield return null;
+
         }
     }
 }
