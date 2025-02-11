@@ -9,6 +9,14 @@ public class doublescreenCameramanager : MonoBehaviour
     [SerializeField] private GameObject plane;
     private Vector2 sizeOfTheMap;
 
+    public enum SplitByAxis
+    {
+        X_Axis,
+        Z_Axis
+    }
+
+    [SerializeField] SplitByAxis splitByAxis;
+
     [Header("If any object in your scene achieves a height superior than 50, input here the achieved height")]
     [SerializeField] private float height = 50f;
 
@@ -67,34 +75,67 @@ public class doublescreenCameramanager : MonoBehaviour
 
     private void ConfigureCameras(Camera camera1, Camera camera2)
     {
+        Vector3 camera1Position = new Vector3(0f, 0f, 0f);
+        Vector3 camera2Position = new Vector3(0f, 0f, 0f);
+        float aspect = 1f;
+        float orthographicSize = 1f;
+        Vector3 camera1LookAt = new Vector3(0f, 0f, 0f);
 
-        // Set the cameras at quarter-width distances along the x-axis.
-        Vector3 camera1Position = new Vector3(sizeOfTheMap.x / 4, height, 0f); // Camera for the right side
-        Vector3 camera2Position = new Vector3(-sizeOfTheMap.x / 4, height, 0f); // Camera for the left side
+        if (splitByAxis == SplitByAxis.X_Axis)
+        {
+            // Set the cameras at quarter-width distances along the x-axis.
+            camera1Position = new Vector3(sizeOfTheMap.x / 4, height, 0f); // Camera for the right side
+            camera2Position = new Vector3(-sizeOfTheMap.x / 4, height, 0f); // Camera for the left side
+            aspect = sizeOfTheMap.x / (sizeOfTheMap.y / 2f);
+            orthographicSize = sizeOfTheMap.x / 4f;
+            camera1LookAt = new Vector3(sizeOfTheMap.x / 4, 0f, 0f);
+        }
+        else if (splitByAxis == SplitByAxis.Z_Axis)
+        {
+            // Set the cameras at quarter-width distances along the z-axis.
+            camera1Position = new Vector3(0f, height, sizeOfTheMap.y / 4); // Camera for the right side
+            camera2Position = new Vector3(0f, height, -sizeOfTheMap.y / 4); // Camera for the left side
+            aspect = sizeOfTheMap.y / (sizeOfTheMap.x / 2f);
+            orthographicSize = sizeOfTheMap.y / 4f;
+            camera1LookAt = new Vector3(0f, 0f, sizeOfTheMap.y / 4);
+        }
 
-        // Cameras look perpendicular to the plane
-        Vector3 camera1LookAt = new Vector3(sizeOfTheMap.x / 4, 0f, 0f);
-        //Vector3 camera2LookAt = new Vector3(-sizeOfTheMap.x / 4, 0f, 0f);
 
         // Configure the first camera (right side)
-        camera1.aspect = sizeOfTheMap.x / (sizeOfTheMap.y / 2f);  // Aspect ratio based on the plane's size
+        camera1.aspect = aspect;  // Aspect ratio based on the plane's size
         camera1.orthographic = true;
-        camera1.orthographicSize = sizeOfTheMap.y / 4f;  
+        camera1.orthographicSize = orthographicSize;
         camera1.transform.localPosition = camera1Position;
         camera1.transform.LookAt(camera1LookAt);  // Look at the center (0, 0, 0)
+        if (splitByAxis == SplitByAxis.X_Axis)
+        {
+            camera1.transform.rotation = Quaternion.Euler(90f, -90f, 0f); ;
+        }
+        else if (splitByAxis == SplitByAxis.Z_Axis)
+        {
+            camera1.transform.rotation = Quaternion.Euler(90f, 180f, 0f);
+        }
         camera1.backgroundColor = backgroundColor;
 
         // Configure the second camera (left side)
-        camera2.aspect = sizeOfTheMap.x / (sizeOfTheMap.y / 2f); // Aspect ratio based on the plane's size
+        camera2.aspect = aspect; // Aspect ratio based on the plane's size
         camera2.orthographic = true;
-        camera2.orthographicSize = sizeOfTheMap.y / 4f; 
+        camera2.orthographicSize = orthographicSize;
         camera2.transform.localPosition = camera2Position;
         camera2.transform.rotation = camera1.transform.rotation * Quaternion.Euler(180f, 180f, 0f); //I can't understand why the 180 rotation at x axis (Review)
         camera2.backgroundColor = backgroundColor;
 
         // Display for each camera
-        camera1.targetDisplay = 0;
-        camera2.targetDisplay = 1;
+        if (splitByAxis == SplitByAxis.X_Axis)
+        {
+            camera1.targetDisplay = 0;
+            camera2.targetDisplay = 1;
+        }
+        else if (splitByAxis == SplitByAxis.Z_Axis)
+        {
+            camera1.targetDisplay = 1;
+            camera2.targetDisplay = 0;
+        }
     }
 
     private void ConfigureSplitCanvas()
