@@ -180,13 +180,16 @@ public class CalibrationQuadManager : MonoBehaviour
         EliminateObjects();
     }
 
-    private void EliminateObjects()
+    public void EliminateObjects()
     {
         foreach (var sphere in spherePoints)
         {
             Destroy(sphere);
+            Destroy(sphere.transform.parent.gameObject);
+
         }
 
         Destroy(quadObject);
+        Destroy(quadObject.transform.parent.gameObject);
     }
 }

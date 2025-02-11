@@ -75,11 +75,20 @@ public class CalibrationManager : MonoBehaviour
     }
 
     ///// <summary>
-    ///// Resizes the calibration quad to the actual calibration
+    ///// Resizes the calibration quad to the actual calibration and after two second destroys the quad
     ///// </summary>
     public void CalibrationQuadLiberation(Calibration calibrationData, Vector3 virtualWorldSpace)
     {
         calibrationQuadManager.LerpToCalibratedPosition(calibrationData, virtualWorldSpace);
+    }
+
+    ///// <summary>
+    ///// Destroys the quad
+    ///// </summary>
+    public void CalibrationQuadDestroy()
+    {
+        calibrationQuadManager.EliminateObjects();
+
     }
 
 

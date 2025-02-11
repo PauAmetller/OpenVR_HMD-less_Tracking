@@ -11543,7 +11543,7 @@ PrefabInstance:
       objectReference: {fileID: 93540383}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: splitByAxis
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: desiredHeight

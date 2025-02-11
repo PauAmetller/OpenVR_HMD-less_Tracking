@@ -240,6 +240,9 @@ public class TrackingManager : MonoBehaviour
     /// </summary>
     public void StartCalibration()
     {
+        //Remove previous calibration
+        OnRemoveCalibration();
+
         bool start = true;
 
         //// Check if tracking is enabled
@@ -300,6 +303,7 @@ public class TrackingManager : MonoBehaviour
     }
         else
         {
+            calibrationManager.CalibrationQuadDestroy();
             Debug.Log("Calibration points are not consistent please calibrate again.");
         }
 
