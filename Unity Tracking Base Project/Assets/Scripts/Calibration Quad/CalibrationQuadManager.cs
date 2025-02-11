@@ -7,7 +7,6 @@ public class CalibrationQuadManager : MonoBehaviour
 {
     private List<GameObject> spherePoints = new List<GameObject>();
     private GameObject quadObject;
-    private GameObject ghostQuadObject;
 
     [SerializeField] private Material material;
     //[SerializeField] private Material ghostMaterial;
@@ -59,7 +58,6 @@ public class CalibrationQuadManager : MonoBehaviour
 
         // Create a new GameObject to hold the mesh
         quadObject = new GameObject("Quad");
-        ghostQuadObject = new GameObject("GhostQuad");
 
         // Add a MeshFilter and MeshRenderer components
         MeshFilter meshFilter = quadObject.AddComponent<MeshFilter>();
@@ -148,7 +146,9 @@ public class CalibrationQuadManager : MonoBehaviour
     private IEnumerator SphereLerpToCalibratedPosition(GameObject sphere, Calibration calibrationData, Vector3 virtualWorldSpace, float duration)
     {
         Vector3 startPos = sphere.transform.position;
-        Vector3 targetPos = CalibrationUtils.CalibrateRawPos(startPos, true, calibrationData, virtualWorldSpace);
+        Vector3 calibratedPos = CalibrationUtils.CalibrateRawPos(startPos, true, calibrationData, virtualWorldSpace);
+        Vector3 targetPos = new Vector3(calibratedPos.x * 10 / 9, calibratedPos.y, calibratedPos.z * 10 / 9);
+
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -174,5 +174,19 @@ public class CalibrationQuadManager : MonoBehaviour
             yield return null;
 
         }
+
+        yield return new WaitForSeconds(duration);
+
+        EliminateObjects();
+    }
+
+    private void EliminateObjects()
+    {
+        foreach (var sphere in spherePoints)
+        {
+            Destroy(sphere);
+        }
+
+        Destroy(quadObject);
     }
 }
