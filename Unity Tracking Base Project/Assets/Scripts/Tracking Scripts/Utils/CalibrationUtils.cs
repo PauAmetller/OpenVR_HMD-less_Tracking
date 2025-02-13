@@ -24,8 +24,11 @@ public static class CalibrationUtils
         // Apply scaling to the position
         calibratedPos = ApplyScale(calibratedPos, calibration.GetCalibrationRealWorldSize(), virtualWorldSpace);
 
-        if(!enableYAxis)
+
+        if (!enableYAxis)
             calibratedPos.y = 0;
+        else if (calibratedPos.y < 0)  //To prevent reverse Y axis when there's 180 degree rotation
+            calibratedPos.y = -calibratedPos.y;
 
         return calibratedPos;
     }
@@ -56,7 +59,7 @@ public static class CalibrationUtils
 
     public static Quaternion CalibratedRawRot(Quaternion playerRotation, Calibration calibration)
     {
-        return playerRotation * calibration.GetCalibrationRotation();
+        return playerRotation * Quaternion.Inverse(calibration.GetCalibrationRotation());
     }
 
     // ==== Ends: Update Rotation Block ====

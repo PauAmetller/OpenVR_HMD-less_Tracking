@@ -21,9 +21,9 @@ public class TrackingManager : MonoBehaviour
     [SerializeField] private int numberOfBaseStations;
     [SerializeField] private bool enableRotation;
     [SerializeField] private bool enableYAxis;
-    [SerializeField] private bool swapXZ;
-    [SerializeField] private bool invertX;
-    [SerializeField] private bool invertZ;
+    //[SerializeField] private bool swapXZ;
+    //[SerializeField] private bool invertX;
+    //[SerializeField] private bool invertZ;
     [Tooltip("Provided virtual world space is the size of the plane or surface that is seen as for height, as mush as one meter in the real world should match to")]
     [SerializeField] private Vector3 virtualWorldSpace;
 
@@ -163,7 +163,7 @@ public class TrackingManager : MonoBehaviour
         for (; ; )
         {
             float[] openVrOutputArr = new float[playersPosAndRotDatatSize];
-            PluginConnector.UpdatePositions(openVrOutputArr, invertX, invertZ, swapXZ);
+            PluginConnector.UpdatePositions(openVrOutputArr, false, true, false);
 
             for (int i = 0; i < numberOfPlayers; i++)
             {
@@ -173,6 +173,13 @@ public class TrackingManager : MonoBehaviour
                 Vector3 playersRawPosition = new Vector3(openVrOutputArr[0 + playerIndex], openVrOutputArr[1 + playerIndex], openVrOutputArr[2 + playerIndex]);
 
                 Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
+
+                //if (splitByAxis == SplitByAxis.Z_Axis)
+                //{
+                //    Quaternion additionalRotation = Quaternion.Euler(0f, 90f, 0f);
+                //    Quaternion newRotation = playerRotation * additionalRotation;
+                //    playerRotation = newRotation;
+                //}
 
                 if (calibrated)
                 {
@@ -212,8 +219,6 @@ public class TrackingManager : MonoBehaviour
     private void Update()
     {
         ListenToControls();
-
-        //UpdateInterfaceText();
 
         //if tracking is not enabled move players with keyboard
         if (!enableTracking)
@@ -307,7 +312,7 @@ public class TrackingManager : MonoBehaviour
             Debug.Log("Calibration points are not consistent please calibrate again.");
         }
 
-for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             calibrationUI.SetPointPos(i, new Vector3(0,0,0));
         }

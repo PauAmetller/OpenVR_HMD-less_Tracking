@@ -2694,9 +2694,7 @@ MonoBehaviour:
   numberOfBaseStations: 4
   enableRotation: 1
   enableYAxis: 1
-  swapXZ: 0
-  invertX: 0
-  invertZ: 0
+  splitByAxis: 0
   virtualWorldSpace: {x: 50, y: 1, z: 50}
   players:
   - {fileID: 1773101373}
@@ -11543,7 +11541,7 @@ PrefabInstance:
       objectReference: {fileID: 93540383}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: splitByAxis
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: desiredHeight
