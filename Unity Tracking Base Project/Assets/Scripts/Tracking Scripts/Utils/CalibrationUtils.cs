@@ -59,7 +59,7 @@ public static class CalibrationUtils
 
     public static Quaternion CalibratedRawRot(Quaternion playerRotation, Calibration calibration)
     {
-        return playerRotation * Quaternion.Inverse(calibration.GetCalibrationRotation());
+        return calibration.GetCalibrationRotation() * playerRotation;
     }
 
     // ==== Ends: Update Rotation Block ====

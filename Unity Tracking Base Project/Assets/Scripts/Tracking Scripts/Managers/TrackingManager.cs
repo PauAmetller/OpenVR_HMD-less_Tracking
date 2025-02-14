@@ -174,13 +174,6 @@ public class TrackingManager : MonoBehaviour
 
                 Quaternion playerRotation = new Quaternion(openVrOutputArr[3 + playerIndex], openVrOutputArr[4 + playerIndex], openVrOutputArr[5 + playerIndex], openVrOutputArr[6 + playerIndex]);
 
-                //if (splitByAxis == SplitByAxis.Z_Axis)
-                //{
-                //    Quaternion additionalRotation = Quaternion.Euler(0f, 90f, 0f);
-                //    Quaternion newRotation = playerRotation * additionalRotation;
-                //    playerRotation = newRotation;
-                //}
-
                 if (calibrated)
                 {
                     //Calculates the calibrated position using the Calibration data
