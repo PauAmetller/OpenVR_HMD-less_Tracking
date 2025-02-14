@@ -309,6 +309,8 @@ public class TrackingManager : MonoBehaviour
         {
             calibrationUI.SetPointPos(i, new Vector3(0,0,0));
         }
+        calibrationManager.ClearCalibrationPoints();
+
     }
 
     //select the player that will move when trackingDisabled (default player 1)

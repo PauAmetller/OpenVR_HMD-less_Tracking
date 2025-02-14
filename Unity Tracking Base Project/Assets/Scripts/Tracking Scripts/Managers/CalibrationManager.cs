@@ -75,6 +75,15 @@ public class CalibrationManager : MonoBehaviour
     }
 
     ///// <summary>
+    ///// Clears the list of calibration points.
+    ///// </summary>
+    public void ClearCalibrationPoints()
+    {
+        calibrationPoints.Clear();
+    }
+
+
+    ///// <summary>
     ///// Resizes the calibration quad to the actual calibration and after two second destroys the quad
     ///// </summary>
     public void CalibrationQuadLiberation(Calibration calibrationData, Vector3 virtualWorldSpace)
