@@ -184,12 +184,26 @@ public class CalibrationQuadManager : MonoBehaviour
     {
         foreach (var sphere in spherePoints)
         {
-            Destroy(sphere);
-            Destroy(sphere.transform.parent.gameObject);
-
+            if (sphere != null)
+            {
+                Destroy(sphere);
+                if (sphere.transform.parent != null)
+                {
+                    Destroy(sphere.transform.parent.gameObject);
+                }
+            }
         }
+        spherePoints.Clear(); 
 
-        Destroy(quadObject);
-        Destroy(quadObject.transform.parent.gameObject);
+        if (quadObject != null)
+        {
+            Destroy(quadObject);
+            if (quadObject.transform.parent != null)
+            {
+                Destroy(quadObject.transform.parent.gameObject);
+            }
+            quadObject = null;
+        }
     }
+
 }
