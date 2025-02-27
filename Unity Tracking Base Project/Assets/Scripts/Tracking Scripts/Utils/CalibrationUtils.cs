@@ -83,8 +83,6 @@ public static class CalibrationUtils
         Quaternion qRot = CalculateRotationMatrix(calibrationPoints);
         calibrationData.SetCalibrationRotation(new Quaternion(-qRot.x, -qRot.y, -qRot.z, qRot.w));
 
-        //Calculate rotation matrix
-
         return calibrationData;
     }
 

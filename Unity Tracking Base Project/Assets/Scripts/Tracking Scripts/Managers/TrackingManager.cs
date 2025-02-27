@@ -243,12 +243,12 @@ public class TrackingManager : MonoBehaviour
 
         bool start = true;
 
-        //// Check if tracking is enabled
-        //if (!enableTracking)
-        //{
-        //    Debug.Log("Tracking is not enabled");
-        //    start = false;
-        //}
+        // Check if tracking is enabled
+        if (!enableTracking)
+        {
+            Debug.Log("Tracking is not enabled");
+           start = false;
+        }
 
         //// Check if the number of players is valid
         //if (numberOfPlayers != 1)
