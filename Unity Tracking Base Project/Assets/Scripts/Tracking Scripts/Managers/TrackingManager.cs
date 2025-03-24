@@ -250,13 +250,6 @@ public class TrackingManager : MonoBehaviour
            start = false;
         }
 
-        //// Check if the number of players is valid
-        //if (numberOfPlayers != 1)
-        //{
-        //    Debug.Log("Calibration requires having only 1 tracker activated");
-        //    start = false;
-        //}
-
         // If all conditions are met, start calibration
         if (start)
         {
