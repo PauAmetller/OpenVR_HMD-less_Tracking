@@ -85,7 +85,7 @@ public class TrackingManager : MonoBehaviour
             }
             // Set interface text for player number and checks consistency
             int detectedPlayers = PluginConnector.GetNumberOfTrackers();
-            if (detectedPlayers == numberOfPlayers)
+            if (detectedPlayers >= numberOfPlayers)
             {
                 //calibrationUI.playersNumberText.text = detectedPlayers.ToString();
                 playersPosAndRotDatatSize = numberOfPlayers * playerRotDatatSize;
