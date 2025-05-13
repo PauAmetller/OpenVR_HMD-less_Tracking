@@ -4,7 +4,7 @@ This repository contains an openVR Tracking library that uses the HTC Vive Base 
 
 There is also a base Unity project that uses the tracking library to perform a calibration process and obtain a calibration file, which can then be applied in your own projects. A ready-to-use template based on this calibration is available here: [Interactive Systems Updated Template](https://github.com/PauAmetller/InteractiveSystemsUpdatedTemplate/tree/main).
 
-Inside the Guides folder, you’ll find all the necessary information to integrate and adapt your own project using the obtained calibration. The system offers great adaptability and can be used in most environments, with the main requirement being that the projection area must have a four-sided, straight-edged layout with right angles (e.g., a rectangular or square shape).
+Inside the Guides folder, you’ll find all the necessary information to integrate and adapt your own project in order to use the obtained calibration. The system offers great adaptability and can be used in most environments, with the main requirement being that the projection area must have a four-sided, straight-edged layout with right angles (e.g., a rectangular or square shape).
 
 This library was developed as a UPF Bachelor's Final Project for FubIntLab and its interactive interaction Mixed Meality space and is now being released as an open source project "as is". The project was later further improved by another UPF Bachelor's student as part of his Final Project.
 
