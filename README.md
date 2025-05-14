@@ -1,4 +1,4 @@
-# OpenVR HMD-less Tracking Library
+# OpenVR HMD-less Tracking
 
 This repository contains an openVR Tracking library that uses the HTC Vive Base Stations and Trackers for 3D tracking without the need of the HMD or the controllers at any point.
 
