@@ -1,7 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine;
+using System.Linq;
+using System;
+using Newtonsoft.Json;
 
 public class doublescreenCameramanager : MonoBehaviour
 {
@@ -25,18 +29,44 @@ public class doublescreenCameramanager : MonoBehaviour
     [Header("Assign Canvas")]
     [Tooltip("This canvas will be split and rendered accross the two cameras")]
     [SerializeField] private Canvas originalCanvas;
+    private Canvas duplicatedCanvas;
 
-    [SerializeField] private float projectedHeight;
-    [SerializeField] private float desiredHeight;
+    private CanvasSnapshot originalCanvasSnapshot;
+
+    [Header("Use percentatge of overlap from the overlap file")]
+    [SerializeField] private bool UseOverlapFile;
+    [SerializeField, Range(0f, 100f)]
+    private float percentatgeOfOverlap;
     private float visibleHeightPercentatge;
 
     [SerializeField] private CalibrationUIManager calibrationUIManager;
+
+    [SerializeField] private string overlapSaveFilePath;
+    private string overlapSaveFileName = "overlapCalibration";
+    private string fullOverlapSaveFilePath;
+
+    public class OverlapData { public float percentatgeOfOverlap; }
 
     /// <summary>
     /// This script just open the two screens on the same allication
     /// </summary>
     private void Awake()
     {
+
+        //assign calibration save File
+        if (string.IsNullOrEmpty(overlapSaveFilePath))
+        {
+            overlapSaveFilePath = Application.persistentDataPath;
+        }
+        fullOverlapSaveFilePath = overlapSaveFilePath + "/" + overlapSaveFileName + ".json";
+
+        if (UseOverlapFile)
+        {
+            //load calibration if saved
+            LoadOverlapJson();
+        }
+
+
         //NB: screen indexes start from 1
         for (int i = 0; i < GameObject.FindObjectsOfType<Camera>().Length; i++)
         {
@@ -48,8 +78,6 @@ public class doublescreenCameramanager : MonoBehaviour
 
         //Multiply by 10 since the default size of a plane is 10x10
         sizeOfTheMap = new Vector2(plane.transform.localScale.x * 10f, plane.transform.localScale.z * 10f);
-
-        visibleHeightPercentatge = desiredHeight / projectedHeight;
 
         // Get cameras
         Camera camera1 = transform.GetChild(0).GetComponent<Camera>();
@@ -63,6 +91,68 @@ public class doublescreenCameramanager : MonoBehaviour
 
         // Position and configure the cameras based on map size and height
         ConfigureCameras(camera1, camera2);
+
+        SaveOriginalCanvasInfo();
+
+        ConfigurateCamerasSetup();
+    }
+
+    private void LoadOverlapJson()
+    {
+        Debug.Log("Fetching file at: " + fullOverlapSaveFilePath);
+
+        try
+        {
+            string jsonString = File.ReadAllText(fullOverlapSaveFilePath);
+            OverlapData OverlapData = JsonConvert.DeserializeObject<OverlapData>(jsonString);
+            percentatgeOfOverlap = OverlapData.percentatgeOfOverlap;
+        }
+        catch (Exception)
+        {
+            Debug.Log("Overlap file not found");
+        }
+    }
+
+    public void OnSaveOverlapJson()
+    {
+        OverlapData OverlapData = new OverlapData();
+        OverlapData.percentatgeOfOverlap = percentatgeOfOverlap;
+        string jsonString = JsonUtility.ToJson(OverlapData);
+        File.WriteAllText(fullOverlapSaveFilePath, jsonString);
+    }
+
+    private void Update()
+    {
+        float step = 5f * Time.deltaTime; // Adjust speed here (20 units per second)
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            percentatgeOfOverlap -= step;
+            ConfigurateCamerasSetup();
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            percentatgeOfOverlap += step;
+            ConfigurateCamerasSetup();
+        }
+
+        // Optional: Clamp between 0 and 100
+        percentatgeOfOverlap = Mathf.Clamp(percentatgeOfOverlap, 0f, 100f);
+    }
+
+    private void ConfigurateCamerasSetup()
+    {
+        visibleHeightPercentatge = 1 / (1 + (percentatgeOfOverlap / 100));
+
+        // Get cameras
+        Camera camera1 = transform.GetChild(0).GetComponent<Camera>();
+        Camera camera2 = transform.GetChild(1).GetComponent<Camera>();
+
+        if (camera1 == null || camera2 == null)
+        {
+            Debug.LogError("Cameras not found on children of this GameObject.");
+            return;
+        }
 
         // Configure the canvas display between the cameras
         ConfigureSplitCanvas();
@@ -138,30 +228,40 @@ public class doublescreenCameramanager : MonoBehaviour
         }
     }
 
+    private void SaveOriginalCanvasInfo()
+    {
+        RectTransform originalRect = originalCanvas.GetComponent<RectTransform>();
+        originalCanvasSnapshot = new CanvasSnapshot(originalRect, originalCanvas);
+    }
+
     private void ConfigureSplitCanvas()
     {
         if (originalCanvas != null)
         {
-            GameObject duplicatedCanvasGO = Instantiate(originalCanvas.gameObject);
-            Canvas duplicatedCanvas = duplicatedCanvasGO.GetComponent<Canvas>();
+            if (duplicatedCanvas == null)
+            {
+                GameObject duplicatedCanvasGO = Instantiate(originalCanvas.gameObject);
+                duplicatedCanvas = duplicatedCanvasGO.GetComponent<Canvas>();
 
-            // Set Render Mode to Overlay
-            originalCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            duplicatedCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                // Set Render Mode to Overlay
+                originalCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                duplicatedCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            duplicatedCanvasGO.transform.SetParent(originalCanvas.transform.parent);
-            duplicatedCanvasGO.transform.SetSiblingIndex(originalCanvas.transform.GetSiblingIndex() + 1);
+                duplicatedCanvasGO.transform.SetParent(originalCanvas.transform.parent);
+                duplicatedCanvasGO.transform.SetSiblingIndex(originalCanvas.transform.GetSiblingIndex() + 1);
 
-            originalCanvas.targetDisplay = 0; // Display 1
-            duplicatedCanvas.targetDisplay = 1; // Display 2
+                originalCanvas.targetDisplay = 0; // Display 1
+                duplicatedCanvas.targetDisplay = 1; // Display 2
+            }
 
             RectTransform originalRect = originalCanvas.GetComponent<RectTransform>();
-            RectTransform duplicatedRect = duplicatedCanvasGO.GetComponent<RectTransform>();
+            RectTransform duplicatedRect = duplicatedCanvas.GetComponent<RectTransform>();
+
 
             // Calculate half canvas height
-            float halfCanvasHeight = originalRect.sizeDelta.y * 0.5f;
-            float extraCanvasHeightOffset = originalRect.sizeDelta.y * (1.0f - visibleHeightPercentatge) ;
-            float halfCanvasWidth = originalRect.sizeDelta.x * 0.5f;
+            float halfCanvasHeight = originalCanvasSnapshot.sizeDelta.y * 0.5f;
+            float extraCanvasHeightOffset = originalCanvasSnapshot.sizeDelta.y * (1.0f - visibleHeightPercentatge) ;
+            float halfCanvasWidth = originalCanvasSnapshot.sizeDelta.x * 0.5f;
 
             float scaleFactor = ((halfCanvasHeight * visibleHeightPercentatge) / halfCanvasWidth) * 2;
 
@@ -171,35 +271,57 @@ public class doublescreenCameramanager : MonoBehaviour
             foreach (Transform child in originalCanvas.transform)
             {
                 RectTransform childRect = child.GetComponent<RectTransform>();
-                if (childRect != null)
+                if (childRect == null) continue;
+
+                // Try to find matching saved snapshot by name
+                var matchingSnapshot = originalCanvasSnapshot.children
+                    .FirstOrDefault(snap => snap.name == child.name);
+
+                if (matchingSnapshot != null)
                 {
-                    childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                          childRect.anchoredPosition.y + canvasHeightOffset);
-                    childRect.localScale = new Vector3(childRect.localScale.x,
-                                                     childRect.localScale.y * scaleFactor,
-                                                     childRect.localScale.z);
+                    childRect.anchoredPosition = new Vector2(
+                        matchingSnapshot.originalAnchoredPosition.x,
+                        matchingSnapshot.originalAnchoredPosition.y + canvasHeightOffset
+                    );
+
+                    childRect.localScale = new Vector3(
+                        matchingSnapshot.originalLocalScale.x,
+                        matchingSnapshot.originalLocalScale.y * scaleFactor,
+                        matchingSnapshot.originalLocalScale.z
+                    );
                 }
             }
 
-            // Move, scale, and rotate child objects of duplicated canvas
+
             foreach (Transform child in duplicatedCanvas.transform)
             {
                 RectTransform childRect = child.GetComponent<RectTransform>();
-                if (childRect != null)
+                if (childRect == null) continue;
+
+                // Find matching snapshot by name from the original canvas
+                var matchingSnapshot = originalCanvasSnapshot.children
+                    .FirstOrDefault(snap => snap.name == child.name);
+
+                if (matchingSnapshot != null)
                 {
+                    float yCorrection = matchingSnapshot.originalAnchoredPosition.y * 2f;
 
-                    float Ycorrection = (float)(childRect.anchoredPosition.y * 2.0);
+                    childRect.anchoredPosition = new Vector2(
+                        matchingSnapshot.originalAnchoredPosition.x,
+                        matchingSnapshot.originalAnchoredPosition.y + canvasHeightOffset - yCorrection
+                    );
 
-                    childRect.anchoredPosition = new Vector2(childRect.anchoredPosition.x,
-                                                             childRect.anchoredPosition.y + canvasHeightOffset - Ycorrection);
-                    childRect.localScale = new Vector3(childRect.localScale.x,
-                                                       childRect.localScale.y * scaleFactor,
-                                                       childRect.localScale.z);
+                    childRect.localScale = new Vector3(
+                        matchingSnapshot.originalLocalScale.x,
+                        matchingSnapshot.originalLocalScale.y * scaleFactor,
+                        matchingSnapshot.originalLocalScale.z
+                    );
 
-                    // Apply 180 degrees rotation around the X-axis
+                    // Rotate 180° on Z axis (visually flips it vertically)
                     childRect.localRotation = Quaternion.Euler(0f, 0f, 180f);
                 }
             }
+
 
             ConfigureMask(originalCanvas);
             ConfigureMask(duplicatedCanvas);
@@ -209,30 +331,92 @@ public class doublescreenCameramanager : MonoBehaviour
         }
     }
 
+    private void ConfigureMask(Canvas canvas)
+    {
+        // Try to find existing mask by name
+        Transform existingMask = canvas.transform.Find("CanvasMask");
+        GameObject maskGO;
+
+        if (existingMask != null)
+        {
+            // Mask already exists; reuse it
+            maskGO = existingMask.gameObject;
+        }
+        else
+        {
+            // Create masking GameObject
+            maskGO = new GameObject("CanvasMask");
+            maskGO.transform.SetParent(canvas.transform, false); // 'false' keeps local transform unchanged
+
+            // Add RectMask2D component
+            maskGO.AddComponent<RectMask2D>();
+
+            // Add an Image component to visualize the mask area
+            Image maskImage = maskGO.AddComponent<Image>();
+            maskImage.color = new Color(0, 0, 0, 1f); // Fully opaque black for visualization (adjust as needed)
+        }
+
+        // Adjust RectTransform to mask the top (1 - visibleHeightPercentatge)
+        RectTransform maskRect = maskGO.GetComponent<RectTransform>();
+        if (maskRect == null)
+            maskRect = maskGO.AddComponent<RectTransform>();
+
+        maskRect.anchorMin = new Vector2(0, visibleHeightPercentatge);
+        maskRect.anchorMax = new Vector2(1, 1f);
+        maskRect.offsetMin = Vector2.zero;
+        maskRect.offsetMax = Vector2.zero;
+    }
+
+
+
     private void ConfigureDisplay(Camera camera1, Camera camera2)
     {
         camera1.rect = new Rect(0f, 0f, 1f, visibleHeightPercentatge);
         camera2.rect = new Rect(0f, 0f, 1f, visibleHeightPercentatge);
     }
 
-    private void ConfigureMask(Canvas canvas)
+
+    private class CanvasSnapshot
     {
-        // Create Masking Object
-        GameObject maskGO = new GameObject("CanvasMask");
-        maskGO.transform.SetParent(canvas.transform);
+        public Vector2 sizeDelta;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale;
+        public float renderScale;
 
-        // Add RectMask2D component
-        RectMask2D rectMask = maskGO.AddComponent<RectMask2D>();
+        public List<ChildSnapshot> children = new();
 
-        // Adjust RectTransform to mask the top 20% and show the bottom 80%
-        RectTransform maskRect = maskGO.GetComponent<RectTransform>();
-        maskRect.anchorMin = new Vector2(0, visibleHeightPercentatge); 
-        maskRect.anchorMax = new Vector2(1, 1f);
-        maskRect.offsetMin = Vector2.zero;
-        maskRect.offsetMax = Vector2.zero;
+        public CanvasSnapshot(RectTransform rectTransform, Canvas canvas)
+        {
+            sizeDelta = rectTransform.sizeDelta;
+            position = rectTransform.position;
+            rotation = rectTransform.rotation;
+            scale = rectTransform.localScale;
+            renderScale = canvas.scaleFactor;
 
-        // Add an Image component to visualize the mask area
-        Image maskImage = maskGO.AddComponent<Image>(); 
-        maskImage.color = new Color(0, 0, 0, 1f); // Semi-transparent black for visualization
+            foreach (Transform child in rectTransform)
+            {
+                RectTransform childRect = child.GetComponent<RectTransform>();
+                if (childRect != null)
+                    children.Add(new ChildSnapshot(childRect));
+            }
+        }
     }
+    private class ChildSnapshot
+    {
+        public string name;
+        public RectTransform rect;
+        public Vector2 originalAnchoredPosition;
+        public Vector3 originalLocalScale;
+
+        public ChildSnapshot(RectTransform rectTransform)
+        {
+            rect = rectTransform;
+            name = rectTransform.name;
+            originalAnchoredPosition = rectTransform.anchoredPosition;
+            originalLocalScale = rectTransform.localScale;
+        }
+    }
+
+
 }
