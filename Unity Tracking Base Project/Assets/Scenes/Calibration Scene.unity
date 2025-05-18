@@ -2933,7 +2933,7 @@ MonoBehaviour:
   - {fileID: 2032303767}
   - {fileID: 1142972673}
   - {fileID: 2017116251}
-  calibrationSaveFilePath: C:\Users\pauam\Documents\GitHub\TFG\Calibration Json
+  calibrationSaveFilePath: 
   playerSelected: 1
   trackingDisabledPlayerSpeed: 5
 --- !u!1 &755713255
@@ -12242,7 +12242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: overlapSaveFilePath
-      value: C:\Users\pauam\Documents\GitHub\TFG\Calibration Json
+      value: C:\Overlap\
       objectReference: {fileID: 0}
     - target: {fileID: 7112999616585136355, guid: 2ce11a9ba21a4b142ac18e152cd000f6, type: 3}
       propertyPath: calibrationUIManager
