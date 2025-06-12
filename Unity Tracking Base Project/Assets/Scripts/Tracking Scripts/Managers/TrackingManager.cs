@@ -151,7 +151,7 @@ public class TrackingManager : MonoBehaviour
         catch (Exception)
         {
             Debug.Log("Calibration not found. If you want to Start with a preloaded calibration, please generate a file with 'Save Current Calibration' button");
-            calibrationUI.SetCalibrationFileStatus("Calibration Failed!");
+            calibrationUI.SetCalibrationFileStatus("Calibration file not found!");
         }
     }
 
